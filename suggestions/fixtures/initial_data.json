@@ -1,0 +1,14 @@
+[
+{
+    "pk": 1, 
+    "model": "suggestions.suggestion", 
+    "fields": {
+        "submitted_by": null, 
+        "skipped_by": [], 
+        "liked_by": [], 
+        "actioned_by": [], 
+        "text": "Buy them some flowers", 
+        "public": true
+    }
+}
+]

@@ -77,6 +77,8 @@ class Suggestion(models.Model):
     class Meta:
         app_label = 'suggestions'
         ordering = ['text']
+        verbose_name = _('suggestion')
+        verbose_name_plural = _('suggestions')
 
     def __str__(self):
         return self.text
