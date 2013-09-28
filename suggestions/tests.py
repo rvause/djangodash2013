@@ -10,7 +10,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 
 from .models import Suggestion, SuggestionCopy
-from .views import LoginRequiredMixin
+from .views import LoginRequiredMixin, JSONResponseMixin
 
 
 User = get_user_model()
@@ -118,6 +118,16 @@ class ViewMixinTests(TestCase):
         request.user = User(username='test', email='test@example.com')
         response = TestView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_json_response_mixin(self):
+        class TestView(JSONResponseMixin, View):
+            def get(self, request, *ar, **kw):
+                return self.render_to_response({'this': 'that'})
+        request = self.factory.get('/test-view/')
+        response = TestView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, '{"this": "that"}')
+        self.assertEqual(response['content-type'], 'application/json')
 
 
 class ViewsTests(TestCaseWithSuggestion):
