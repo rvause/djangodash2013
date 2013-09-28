@@ -151,7 +151,7 @@ INSTALLED_APPS = (
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-LOGIN_URL = '/'
+LOGIN_URL = '/my/'
 LOGOUT_URL = '/logout/'
 
 # A sample logging configuration. The only tangible logging

@@ -110,3 +110,10 @@ class ViewsTests(TestCaseWithSuggestion):
         url = self.suggestion.get_absolute_url()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_users(self):
+        self.client.login(username=self.user.username, password='test')
+        url = reverse('suggestions:users')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['object_list'].count())

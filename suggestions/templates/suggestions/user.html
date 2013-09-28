@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% load i18n %}
+
+{% block title %}{{ _('You\'re a Hero') }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% for object_ in object_list %}
+        {% if forloop.first %}
+            <p>{{ object_ }}</p>
+        {% else %}
+            <p>{{ object_ }}</p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

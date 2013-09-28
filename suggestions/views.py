@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Suggestion
+from .models import Suggestion, SuggestionCopy
 
 
 class IndexView(DetailView):
@@ -60,6 +60,12 @@ class UserView(LoginRequiredMixin, ListView):
     template_name = 'suggestions/user.html'
 
     def get_queryset(self):
+        """
+        We want to get the 10 latest suggestions that the user has had copied
+        or if there are none we create a new one.
+        """
         queryset = self.request.user.suggestions.all()[:10]
-        if not queryset:
-            pass
+        if not queryset.count():
+            SuggestionCopy.objects.create_random_for_user(self.request.user)
+            return self.request.user.suggestions.all()[:10]
+        return queryset
