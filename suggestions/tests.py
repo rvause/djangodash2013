@@ -28,6 +28,9 @@ class SuggestionModelTests(TestCaseWithSuggestion):
     def test_make_unique_slug(self):
         self.suggestion.make_unique_slug()
         self.assertEqual(self.suggestion.slug, 'how-about-this')
+        suggestion = Suggestion(text='How about this?')
+        suggestion.make_unique_slug()
+        self.assertEqual(suggestion.slug, 'how-about-this-1')
 
 
 class ViewsTests(TestCaseWithSuggestion):
