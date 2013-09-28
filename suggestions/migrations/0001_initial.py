@@ -12,6 +12,7 @@ class Migration(SchemaMigration):
         db.create_table(u'suggestions_suggestion', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('text', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=255)),
             ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('submitted_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='suggestions_submitted', null=True, to=orm['auth.User'])),
         ))
@@ -103,6 +104,7 @@ class Migration(SchemaMigration):
             'liked_by': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'suggestions_liked'", 'blank': 'True', 'to': u"orm['auth.User']"}),
             'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'skipped_by': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'suggestions_skipped'", 'blank': 'True', 'to': u"orm['auth.User']"}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'submitted_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'suggestions_submitted'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'text': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }

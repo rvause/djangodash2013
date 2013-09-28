@@ -32,3 +32,10 @@ class IndexView(DetailView):
                 )
             return HttpResponseBadRequest('Format not supported')
         return super(IndexView, self).render_to_response(ctx, **kw)
+
+
+class SuggestionView(DetailView):
+    """
+    A view for a single Suggestion
+    """
+    pass

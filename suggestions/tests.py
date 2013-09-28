@@ -6,7 +6,10 @@ from .models import Suggestion
 
 class TestCaseWithSuggestion(TestCase):
     def setUp(self):
-        self.suggestion = Suggestion.objects.create(text='How about this?')
+        self.suggestion = Suggestion.objects.create(
+            text='How about this?',
+            slug='how-about-this'
+        )
 
 
 class SuggestionModelTests(TestCaseWithSuggestion):
@@ -21,6 +24,10 @@ class SuggestionModelTests(TestCaseWithSuggestion):
         self.suggestion.public = False
         self.suggestion.save()
         self.assertFalse(Suggestion.objects.public().count())
+
+    def test_make_unique_slug(self):
+        self.suggestion.make_unique_slug()
+        self.assertEqual(self.suggestion.slug, 'how-about-this')
 
 
 class ViewsTests(TestCaseWithSuggestion):

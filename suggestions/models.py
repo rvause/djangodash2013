@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import slugify
 
 
 class SuggestionQuerySet(QuerySet):
@@ -33,6 +34,12 @@ class Suggestion(models.Model):
         _('text'),
         max_length=255,
         help_text=_('The actual text content for the suggestion')
+    )
+    slug = models.SlugField(
+        _('slug'),
+        max_length=255,
+        unique=True,
+        help_text=_('A friendly identifier for the suggestion used in urls')
     )
 
     # When a user it logged in they can mark the suggestion as done or skipped
@@ -82,3 +89,20 @@ class Suggestion(models.Model):
 
     def __str__(self):
         return self.text
+
+    def make_unique_slug(self):
+        """
+        Make a unique slug
+        """
+        slug = new_slug = slugify(self.text)
+        counter = 0
+        while True:
+            try:
+                obj = self.__class__.objects.get(slug=new_slug)
+                if obj.id == self.id:
+                    break
+                counter += 1
+                new_slug = '%s-%d' % (slug, counter)
+            except self.__class__.DoesNotExist:
+                break
+        self.slug = new_slug
