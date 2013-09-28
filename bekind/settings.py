@@ -151,7 +151,7 @@ INSTALLED_APPS = (
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-LOGIN_URL = '/my/'
+LOGIN_URL = '/'
 LOGOUT_URL = '/logout/'
 
 # A sample logging configuration. The only tangible logging
@@ -189,10 +189,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/my/'
 SOCIAL_AUTH_LOGIN_URL = '/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/my/'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/my/'
 
 SOCIAL_AUTH_TWITTER_KEY = get_envvar('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = get_envvar('SOCIAL_AUTH_TWITTER_SECRET')
