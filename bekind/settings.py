@@ -4,6 +4,13 @@ import os
 import dj_database_url
 
 
+def get_envvar(name):
+    try:
+        return os.environ[name]
+    except KeyError:
+        return ''
+
+
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
@@ -82,7 +89,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'xv+*nj90h3z!)4f%fh63$)kcm7yay=l5but#$6%gr5b$75!^_5'
+SECRET_KEY = get_envvar('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -142,7 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 )
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 LOGIN_URL = '/'
 LOGOUT_URL = '/logout/'
@@ -178,13 +185,16 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend'
 )
-
-SOCIAL_AUTH_TWITTER_KEY = 'J4fcHS7JUqfaBH5g40NHSA'
-SOCIAL_AUTH_TWITTER_SECRET = 'tgBY3Pnb4lZnUYJNDkz20nrjfGdEIuzvFvpU9IgD2o'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_TWITTER_KEY = get_envvar('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = get_envvar('SOCIAL_AUTH_TWITTER_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = get_envvar('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = get_envvar('SOCIAL_AUTH_FACEBOOK_SECRET')
