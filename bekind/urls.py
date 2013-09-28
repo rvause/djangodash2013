@@ -5,7 +5,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^', include('suggestions.urls', 'suggestions')),
-
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('suggestions.urls', 'suggestions')),
+    url(r'^', include('social.apps.django_app.urls', 'social')),
 )
