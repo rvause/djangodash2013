@@ -11,6 +11,7 @@
         {% blocktrans with user.get_full_name as name %}
             Logged in as {{ name }}
         {% endblocktrans %}
+        <a href="{% url 'suggestions:users' %}">{{ _('My Deeds') }}</a> /
         <a href="{% url 'logout' %}">{{ _('Logout') }}</a>
     {% endif %}
 </p>
