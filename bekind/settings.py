@@ -6,7 +6,7 @@ import dj_database_url
 
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -15,8 +15,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://localhost/bekind')
+}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -112,8 +113,13 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    # Project apps
     'suggestions',
 
+    # 3rd Party
+    'south',
+
+    # Django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -153,9 +159,3 @@ LOGGING = {
         },
     }
 }
-
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
