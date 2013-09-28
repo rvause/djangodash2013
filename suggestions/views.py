@@ -96,6 +96,24 @@ class SkipSuggestionView(
         )
 
 
+class ActionSuggestionView(
+    LoginRequiredMixin,
+    GetSuggestionCopyQSMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Mark the current suggestion for the user as actioned and return a new
+    suggestion
+    """
+    def get(self, request, *ar, **kw):
+        self.get_queryset()[0].suggestion.actioned_by.add(request.user)
+        queryset = self.get_queryset()
+        return self.render_to_response(
+            {'suggestion': {'text': str(queryset[0]), 'id': queryset[0].id}}
+        )
+
+
 class LikeSuggestionView(LoginRequiredMixin, JSONResponseMixin, View):
     """
     Mark a suggestion as liked by the user and return the amount of likes

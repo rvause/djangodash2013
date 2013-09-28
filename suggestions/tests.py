@@ -158,6 +158,17 @@ class ViewsTests(TestCaseWithSuggestion):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+    def test_actioned(self):
+        self.client.login(username=self.user.username, password='test')
+        copy = SuggestionCopy.objects.create(
+            suggestion=self.suggestion,
+            user=self.user
+        )
+        url = reverse('suggestions:actioned', args=(copy.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.suggestion, self.user.suggestions_actioned.all())
+
     def test_like(self):
         self.client.login(username=self.user.username, password='test')
         copy = SuggestionCopy.objects.create(
