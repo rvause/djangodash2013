@@ -6,7 +6,7 @@ import dj_database_url
 
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -112,16 +112,15 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'suggestions',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -154,3 +153,9 @@ LOGGING = {
         },
     }
 }
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

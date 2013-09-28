@@ -43,3 +43,4 @@ env
 
 # Django
 staticfiles
+local_settings.py
