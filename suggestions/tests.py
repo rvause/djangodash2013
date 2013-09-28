@@ -85,6 +85,11 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
     def test_defaults(self):
         self.assertEqual(timezone.now().date(), self.copy.created_on.date())
 
+    def test_create_random_for_user_manager(self):
+        copy = SuggestionCopy.objects.create_random_for_user(self.user)
+        self.assertTrue(isinstance(copy, SuggestionCopy))
+        self.assertEqual(copy.suggestion, self.suggestion)
+
     def test_get_text(self):
         self.assertEqual(self.copy.get_text(), self.suggestion.get_text())
         self.copy.them_text = 'him'

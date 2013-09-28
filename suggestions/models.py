@@ -129,6 +129,20 @@ class Suggestion(models.Model):
         self.slug = new_slug
 
 
+class SuggestionCopyManager(models.Manager):
+    """
+    Provides extra methods for SuggestionCopy.objects
+    """
+    use_for_related_fields = True
+
+    def create_random_for_user(self, user):
+        """
+        Get a random suggestion and create it for the user
+        """
+        suggestion = Suggestion.objects.get_random_for_user(user)
+        return self.create(suggestion=suggestion, user=user)
+
+
 class SuggestionCopy(models.Model):
     """
     Copy of a suggestion that adds potential customisation of the them_text
@@ -145,6 +159,8 @@ class SuggestionCopy(models.Model):
     them_text = models.CharField(max_length=50, blank=True)
 
     created_on = models.DateTimeField(default=timezone.now)
+
+    objects = SuggestionCopyManager()
 
     class Meta:
         app_label = 'suggestions'
