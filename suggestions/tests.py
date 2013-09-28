@@ -117,3 +117,9 @@ class ViewsTests(TestCaseWithSuggestion):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['object_list'].count())
+
+    def test_skip(self):
+        self.client.login(username=self.user.username, password='test')
+        url = reverse('suggestions:skip')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

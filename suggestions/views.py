@@ -1,6 +1,6 @@
 import json
 
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
@@ -53,19 +53,41 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*ar, **kw)
 
 
-class UserView(LoginRequiredMixin, ListView):
+class GetSuggestionCopyQSMixin(object):
     """
-    The logged in user's view
+    We want to get the 10 latest suggestions that the user has had copied
+    or if there are none we create a new one.
     """
-    template_name = 'suggestions/user.html'
-
     def get_queryset(self):
-        """
-        We want to get the 10 latest suggestions that the user has had copied
-        or if there are none we create a new one.
-        """
         queryset = self.request.user.suggestions.all()[:10]
         if not queryset.count():
             SuggestionCopy.objects.create_random_for_user(self.request.user)
             return self.request.user.suggestions.all()[:10]
         return queryset
+
+
+class UserView(LoginRequiredMixin, GetSuggestionCopyQSMixin, ListView):
+    """
+    The logged in user's view
+    """
+    template_name = 'suggestions/user.html'
+
+
+class JSONResponseMixin(object):
+    def render_to_response(self, ctx, **kw):
+        return HttpResponse(json.dumps(ctx), 'application/json')
+
+
+class SkipSuggestionView(
+    LoginRequiredMixin,
+    GetSuggestionCopyQSMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Skip over the current suggestion for the user and return a new suggestion
+    """
+    def get(self, request, *ar, **kw):
+        self.get_queryset()[0].delete()
+        queryset = self.get_queryset()
+        return self.render_to_response({'suggestion': str(queryset[0])})
