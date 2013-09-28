@@ -17,6 +17,7 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+__pycache__
 
 # Installer logs
 pip-log.txt
@@ -33,3 +34,12 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Vim
+*.swp
+
+# Virtualenv
+env
+
+# Django
+staticfiles
