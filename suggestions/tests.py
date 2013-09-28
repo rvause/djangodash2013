@@ -1,11 +1,16 @@
 import json
 
 from django.test import TestCase
+from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
+from django.views.generic import View
+from django.http import HttpResponse
 
 from .models import Suggestion, SuggestionCopy
+from .views import LoginRequiredMixin
 
 
 User = get_user_model()
@@ -96,6 +101,23 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
         self.assertEqual(self.copy.get_text(), self.suggestion.get_text())
         self.copy.them_text = 'him'
         self.assertEqual(self.copy.get_text(), 'How about this for him?')
+
+
+class ViewMixinTests(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_login_required_mixin(self):
+        class TestView(LoginRequiredMixin, View):
+            def get(self, request, *ar, **kw):
+                return HttpResponse('Okay')
+        request = self.factory.get('/test-view/')
+        request.user = AnonymousUser()
+        response = TestView.as_view()(request)
+        self.assertEqual(response.status_code, 302)
+        request.user = User(username='test', email='test@example.com')
+        response = TestView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
 
 
 class ViewsTests(TestCaseWithSuggestion):
