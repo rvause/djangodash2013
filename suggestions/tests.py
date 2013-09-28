@@ -42,3 +42,8 @@ class ViewsTests(TestCaseWithSuggestion):
         response = self.client.get(url, {'format': 'json'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual('application/json', response['content-type'])
+
+    def test_suggestion(self):
+        url = self.suggestion.get_absolute_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

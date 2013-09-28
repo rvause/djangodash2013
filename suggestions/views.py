@@ -38,4 +38,4 @@ class SuggestionView(DetailView):
     """
     A view for a single Suggestion
     """
-    pass
+    model = Suggestion

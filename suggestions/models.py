@@ -90,6 +90,10 @@ class Suggestion(models.Model):
     def __str__(self):
         return self.text
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('suggestions:suggestion', (), {'slug': self.slug})
+
     def make_unique_slug(self):
         """
         Make a unique slug
