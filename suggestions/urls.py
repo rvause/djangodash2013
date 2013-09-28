@@ -12,5 +12,10 @@ urlpatterns = patterns(
         r'^(?P<slug>[\w-]+)/$',
         views.SuggestionView.as_view(),
         name='suggestion'
-    )
+    ),
+    url(
+        r'^my/(?P<id>\d+)/like/$',
+        views.LikeSuggestionView.as_view(),
+        name='like'
+    ),
 )

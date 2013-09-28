@@ -5,6 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 
 from .models import Suggestion, SuggestionCopy
 
@@ -90,4 +91,28 @@ class SkipSuggestionView(
     def get(self, request, *ar, **kw):
         self.get_queryset()[0].delete()
         queryset = self.get_queryset()
-        return self.render_to_response({'suggestion': str(queryset[0])})
+        return self.render_to_response(
+            {'suggestion': {'text': str(queryset[0]), 'id': queryset[0].id}}
+        )
+
+
+class LikeSuggestionView(LoginRequiredMixin, JSONResponseMixin, View):
+    """
+    Mark a suggestion as liked by the user and return the amount of likes
+    """
+    def get_queryset(self):
+        queryset = self.request.user.suggestions.all()
+        if not queryset.count():
+            SuggestionCopy.objects.create_random_for_user(self.request.user)
+            return self.request.user.suggestions.all()
+        return queryset
+
+    def get_object(self, id):
+        return get_object_or_404(self.get_queryset(), pk=id)
+
+    def get(self, request, *ar, **kw):
+        obj = self.get_object(kw['id'])
+        obj.suggestion.liked_by.add(request.user)
+        return self.render_to_response(
+            {'likes': obj.suggestion.liked_by.count()}
+        )

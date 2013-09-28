@@ -1,3 +1,5 @@
+import json
+
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
@@ -123,3 +125,15 @@ class ViewsTests(TestCaseWithSuggestion):
         url = reverse('suggestions:skip')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_like(self):
+        self.client.login(username=self.user.username, password='test')
+        copy = SuggestionCopy.objects.create(
+            suggestion=self.suggestion,
+            user=self.user
+        )
+        url = reverse('suggestions:like', args=(copy.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEqual(data['likes'], 1)
