@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from django.core.exceptions import ImproperlyConfigured
 
 
 class SuggestionQuerySet(QuerySet):
@@ -12,6 +13,15 @@ class SuggestionQuerySet(QuerySet):
     """
     def public(self):
         return self.filter(public=True)
+
+    def get_random_for_user(self, user):
+        try:
+            return self.exclude(actioned_by__in=[user]).order_by('?')[0]
+        except IndexError:
+            try:
+                return self.order_by('?')[0]
+            except IndexError:
+                raise ImproperlyConfigured('No suggestions are installed')
 
 
 class SuggestionManager(models.Manager):
@@ -25,6 +35,9 @@ class SuggestionManager(models.Manager):
 
     def public(self):
         return self.get_query_set().public()
+
+    def get_random_for_user(self, user):
+        return self.get_query_set().get_random_for_user(user)
 
 
 class Suggestion(models.Model):

@@ -15,6 +15,11 @@ class TestCaseWithSuggestion(TestCase):
             text='How about this for {{them}}?',
             slug='how-about-this-for-them'
         )
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='test'
+        )
 
 
 class SuggestionModelTests(TestCaseWithSuggestion):
@@ -29,6 +34,28 @@ class SuggestionModelTests(TestCaseWithSuggestion):
         self.suggestion.public = False
         self.suggestion.save()
         self.assertFalse(Suggestion.objects.public().count())
+
+    def test_manager_get_random_for_user(self):
+        suggestion_2 = Suggestion.objects.create(
+            text='How about that for {{them}}?',
+            slug='how-about-that-for-them'
+        )
+        self.assertIn(
+            Suggestion.objects.get_random_for_user(self.user),
+            [self.suggestion, suggestion_2]
+        )
+        self.suggestion.actioned_by.add(self.user)
+        # Would fail at least sometimes
+        self.assertEqual(
+            Suggestion.objects.get_random_for_user(self.user),
+            suggestion_2
+        )
+        suggestion_2.actioned_by.add(self.user)
+        # Hopefully would fail if it is run enough
+        self.assertIn(
+            Suggestion.objects.get_random_for_user(self.user),
+            [self.suggestion, suggestion_2]
+        )
 
     def test_get_text(self):
         self.assertEqual(
@@ -47,11 +74,6 @@ class SuggestionModelTests(TestCaseWithSuggestion):
 class SuggestionCopyModelTests(TestCaseWithSuggestion):
     def setUp(self):
         super(SuggestionCopyModelTests, self).setUp()
-        self.user = User.objects.create_user(
-            username='test',
-            email='test@example.com',
-            password='test'
-        )
         self.copy = SuggestionCopy(
             suggestion=self.suggestion,
             user=self.user
