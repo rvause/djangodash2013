@@ -1,20 +1,25 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 
-from .models import Suggestion
+from .models import Suggestion, SuggestionCopy
+
+
+User = get_user_model()
 
 
 class TestCaseWithSuggestion(TestCase):
     def setUp(self):
         self.suggestion = Suggestion.objects.create(
-            text='How about this?',
-            slug='how-about-this'
+            text='How about this for {{them}}?',
+            slug='how-about-this-for-them'
         )
 
 
 class SuggestionModelTests(TestCaseWithSuggestion):
     def test_str(self):
-        self.assertEqual(str(self.suggestion), 'How about this?')
+        self.assertEqual(str(self.suggestion), 'How about this for them?')
 
     def test_defaults(self):
         self.assertTrue(self.suggestion.public)
@@ -25,12 +30,43 @@ class SuggestionModelTests(TestCaseWithSuggestion):
         self.suggestion.save()
         self.assertFalse(Suggestion.objects.public().count())
 
+    def test_get_text(self):
+        self.assertEqual(
+            self.suggestion.get_text(),
+            'How about this for them?'
+        )
+
     def test_make_unique_slug(self):
         self.suggestion.make_unique_slug()
-        self.assertEqual(self.suggestion.slug, 'how-about-this')
-        suggestion = Suggestion(text='How about this?')
+        self.assertEqual(self.suggestion.slug, 'how-about-this-for-them')
+        suggestion = Suggestion(text='How about this for them?')
         suggestion.make_unique_slug()
-        self.assertEqual(suggestion.slug, 'how-about-this-1')
+        self.assertEqual(suggestion.slug, 'how-about-this-for-them-1')
+
+
+class SuggestionCopyModelTests(TestCaseWithSuggestion):
+    def setUp(self):
+        super(SuggestionCopyModelTests, self).setUp()
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='test'
+        )
+        self.copy = SuggestionCopy(
+            suggestion=self.suggestion,
+            user=self.user
+        )
+
+    def test_str(self):
+        self.assertEqual(str(self.copy), str(self.suggestion))
+
+    def test_defaults(self):
+        self.assertEqual(timezone.now().date(), self.copy.created_on.date())
+
+    def test_get_text(self):
+        self.assertEqual(self.copy.get_text(), self.suggestion.get_text())
+        self.copy.them_text = 'him'
+        self.assertEqual(self.copy.get_text(), 'How about this for him?')
 
 
 class ViewsTests(TestCaseWithSuggestion):

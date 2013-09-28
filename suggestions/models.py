@@ -3,6 +3,7 @@ from django.db.models.query import QuerySet
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 
 class SuggestionQuerySet(QuerySet):
@@ -88,11 +89,14 @@ class Suggestion(models.Model):
         verbose_name_plural = _('suggestions')
 
     def __str__(self):
-        return self.text
+        return self.get_text()
 
     @models.permalink
     def get_absolute_url(self):
         return ('suggestions:suggestion', (), {'slug': self.slug})
+
+    def get_text(self):
+        return self.text.replace('{{them}}', 'them')
 
     def make_unique_slug(self):
         """
@@ -110,3 +114,35 @@ class Suggestion(models.Model):
             except self.__class__.DoesNotExist:
                 break
         self.slug = new_slug
+
+
+class SuggestionCopy(models.Model):
+    """
+    Copy of a suggestion that adds potential customisation of the them_text
+
+    Implemented this way because it will make selecting suggestions for display
+    a lot more simple
+    """
+    suggestion = models.ForeignKey(Suggestion)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='suggestions'
+    )
+    # This can be blank if it is not really customised
+    them_text = models.CharField(max_length=50, blank=True)
+
+    created_on = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        app_label = 'suggestions'
+        ordering = ['-created_on']
+        verbose_name = _('suggestion copy')
+        verbose_name_plural = _('suggestion copy')
+
+    def __str__(self):
+        return self.get_text()
+
+    def get_text(self):
+        if self.them_text:
+            return self.suggestion.text.replace('{{them}}', self.them_text)
+        return self.suggestion.get_text()

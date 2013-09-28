@@ -7,7 +7,7 @@
         "skipped_by": [],
         "liked_by": [],
         "actioned_by": [],
-        "text": "Buy them some flowers",
+        "text": "Buy {{them}} some flowers",
         "slug": "buy-them-some-flowers",
         "public": true
     }
