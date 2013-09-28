@@ -64,13 +64,6 @@ class Suggestion(models.Model):
         help_text=_('Users that have actioned the suggestion'),
         blank=True
     )
-    skipped_by = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        verbose_name=_('skipped by'),
-        related_name='suggestions_skipped',
-        help_text=_('Users that skipped the suggestion'),
-        blank=True
-    )
     liked_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         verbose_name=_('liked by'),
