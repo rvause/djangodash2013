@@ -2,4 +2,16 @@
 
 {% block title %}{{ _('Home') }} - {{ block.super }}{% endblock %}
 
-{% block content %}{{ object }}{% endblock %}
+{% block content %}
+<p>
+    {% if not user.is_authenticated %}
+        <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a>
+    {% else %}
+        {% blocktrans with user.get_full_name as name %}
+            Logged in as {{ name }}
+        {% endblocktrans %}
+        <a href="{% url 'logout' %}">{{ _('Logout') }}</a>
+    {% endif %}
+</p>
+<p>{{ _('Suggestion') }}: {{ object }}</p>
+{% endblock %}
