@@ -139,6 +139,9 @@ class ViewMixinTests(TestCase):
 
 
 class ViewsTests(TestCaseWithSuggestion):
+    def login(self):
+        self.client.login(username=self.user.username, password='test')
+
     def test_index(self):
         url = reverse('suggestions:index')
         response = self.client.get(url)
@@ -154,20 +157,20 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertEqual(response.status_code, 200)
 
     def test_users(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         url = reverse('suggestions:users')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['object_list'].count())
 
     def test_skip(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         url = reverse('suggestions:skip')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_actioned(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         copy = SuggestionCopy.objects.create(
             suggestion=self.suggestion,
             user=self.user
@@ -178,7 +181,7 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertIn(self.suggestion, self.user.suggestions_actioned.all())
 
     def test_like(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         copy = SuggestionCopy.objects.create(
             suggestion=self.suggestion,
             user=self.user
@@ -190,7 +193,7 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertEqual(data['likes'], 1)
 
     def test_put_back(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         copy = SuggestionCopy.objects.create(
             suggestion=self.suggestion,
             user=self.user
@@ -202,7 +205,7 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertNotEqual(data['suggestion']['id'], copy.id)
 
     def test_update_text(self):
-        self.client.login(username=self.user.username, password='test')
+        self.login()
         copy = SuggestionCopy.objects.create(
             suggestion=self.suggestion,
             user=self.user
