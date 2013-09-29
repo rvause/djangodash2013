@@ -30,7 +30,13 @@ class IndexView(DetailView):
         if 'format' in self.request.GET:
             if self.request.GET['format'] == 'json':
                 return HttpResponse(
-                    json.dumps({'suggestion': str(ctx['object'])}),
+                    json.dumps(
+                        {
+                            'id': ctx['object'].id,
+                            'suggestion': str(ctx['object']),
+                            'url': ctx['object'].get_absolute_url()
+                        }
+                    ),
                     content_type='application/json'
                 )
             return HttpResponseBadRequest('Format not supported')
