@@ -5,10 +5,10 @@
     <div class="wrapper">
         <section class="deed suggestion" id="{{ object.id }}">
             <p>
-                <s>{{ object }}</s>
+                <s>{{ object.split.0 }}</s><mark>{% if object.them_text %}{{ object.them_text }}{% else %}{{ _('them') }}{% endif %}</mark><s>{{ object.split.1 }}</s>
             </p>
             {# Add ?format=json to the following url will return JSON #}
-            <a href="{% url 'suggestions:index' %}" class="button refresh"></a>
+            <a href="{% url 'suggestions:index' %}?format=json" class="button refresh"></a>
         </section>
     </div>
 </main>
