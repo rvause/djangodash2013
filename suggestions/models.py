@@ -135,6 +135,9 @@ class SuggestionCopyManager(models.Manager):
         suggestion = Suggestion.objects.get_random_for_user(user)
         return self.create(suggestion=suggestion, user=user)
 
+    def create_from_suggestion_for_user(self, suggestion, user):
+        return self.create(suggestion=suggestion, user=user)
+
 
 class SuggestionCopy(models.Model):
     """

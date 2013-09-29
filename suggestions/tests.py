@@ -97,6 +97,14 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
         self.assertTrue(isinstance(copy, SuggestionCopy))
         self.assertEqual(copy.suggestion, self.suggestion)
 
+    def test_create_from_suggestion_for_user_manager(self):
+        copy = SuggestionCopy.objects.create_from_suggestion_for_user(
+            self.suggestion,
+            self.user
+        )
+        self.assertTrue(isinstance(copy, SuggestionCopy))
+        self.assertEqual(copy.suggestion, self.suggestion)
+
     def test_get_text(self):
         self.assertEqual(self.copy.get_text(), self.suggestion.get_text())
         self.copy.them_text = 'him'
