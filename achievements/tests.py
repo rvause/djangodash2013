@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+from suggestions.models import Suggestion
+
 from .models import Achievement, UserAchievement
 
 
@@ -20,7 +22,7 @@ class BaseTestCase(TestCase):
             slug='test-achievement',
             description='A test achievement',
             check=Achievement.ACTIONED,
-            count=10
+            count=1
         )
 
 
@@ -39,3 +41,11 @@ class UserAchievementModelTests(BaseTestCase):
 
     def test_defaults(self):
         self.assertEqual(self.ua.achieved_on.date(), timezone.now().date())
+
+    def test_actioned_receiver(self):
+        suggestion = Suggestion.objects.create(
+            text='Test Suggestion',
+            slug='test-suggestion'
+        )
+        suggestion.actioned_by.add(self.user)
+        self.assertIn(self.achievement, self.user.achievement_set.all())

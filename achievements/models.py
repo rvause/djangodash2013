@@ -2,6 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
+
+from suggestions.models import Suggestion
 
 
 class Achievement(models.Model):
@@ -80,3 +84,20 @@ class UserAchievement(models.Model):
     class Meta:
         app_label = 'achievements'
         ordering = ['-achieved_on']
+
+
+@receiver(m2m_changed, sender=Suggestion.actioned_by.through)
+def actioned_receiver(sender, instance, action, **kw):
+    if action == 'post_add':
+        for id in kw['pk_set']:
+            user = instance.actioned_by.get(pk=id)
+            qs = Achievement.objects.filter(
+                check=Achievement.ACTIONED,
+                count__gte=user.suggestions_actioned.count(),
+            )
+            if qs.exists():
+                for achievement in qs:
+                    UserAchievement.objects.create(
+                        user=user,
+                        achievement=achievement
+                    )
