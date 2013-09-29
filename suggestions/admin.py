@@ -7,7 +7,8 @@ from .forms import SuggestionAdminForm
 class SuggestionAdmin(admin.ModelAdmin):
     form = SuggestionAdminForm
     list_display = ('__str__', 'public')
-    fields = ('text', 'slug', 'public')
+    fields = ('text', 'slug', 'public', 'submitted_by')
+    readonly_fields = ('submitted_by',)
     prepopulated_fields = {'slug': ('text',)}
     list_filter = ('public',)
     search_fields = ('text',)
