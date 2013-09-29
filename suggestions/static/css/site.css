@@ -246,18 +246,15 @@ footer {
   background: #f2f2f2;
 }
 footer p {
-  float: left;
+  text-align: center;
   color: #b2b2b2;
 }
 footer p a {
   color: #b2b2b2;
+  text-decoration: none;
 }
 footer p a:hover {
   color: #737373;
-}
-footer p + p {
-  float: right;
-  text-align: right;
 }
 /* ==========================================================================
    Icons
@@ -415,31 +412,32 @@ footer p + p {
   text-decoration: line-through;
 }
 .deed.complete .heart {
-  color: #ff77cc;
+  color: #b2b2b2;
 }
 .deed.complete .heart:before {
   text-shadow: 0px 1px 1px #e6e6e6;
+  color: #d9d9d9;
 }
 .deed.complete .liked {
-  color: #ff77cc;
+  color: #ff90d6;
 }
-.deed.complete .liked span {
-  color: #ffc3e9;
+.deed.complete .liked:before {
+  color: #ffcded;
 }
 .deed.complete:hover p {
   color: #333333;
 }
 .deed.complete:hover .heart {
-  color: #d9d9d9;
+  color: #737373;
 }
-.deed.complete:hover .heart span {
-  color: #595959;
+.deed.complete:hover .heart:before {
+  color: #b2b2b2;
 }
 .deed.complete:hover .liked {
-  color: white;
+  color: #ff11a7;
 }
-.deed.complete:hover .liked span {
-  color: white;
+.deed.complete:hover .liked:before {
+  color: #ffaadf;
 }
 /* Current
    ========================================================================== */
@@ -485,7 +483,7 @@ body.home .current p {
   text-shadow: 0px 1px 1px #c81a11;
 }
 body.home .current p mark {
-  border: 0.4rem dashed #b0170f;
+  border: 0.3rem dashed #b0170f;
   background: none;
 }
 body.home .current .refresh {
@@ -498,7 +496,7 @@ body.home .current .refresh {
   border: 1px solid #ee443c;
   border-radius: 3px;
   background: #ee4037;
-  box-shadow: 0px 1px 0px 0px #a7160e, 0px 0px 0px 6px #b0170f;
+  box-shadow: 0px 1px 0px 0px #a7160e, 0px 0px 0px 0.3rem #b0170f;
   color: #f2f2f2;
   text-align: center;
   text-shadow: 0px 1px 1px #c81a11;
@@ -506,7 +504,7 @@ body.home .current .refresh {
 body.home .current .refresh:hover {
   border: 1px solid #ef4940;
   background: #f0564f;
-  box-shadow: 0px 0px 0px 1px #b0170f, 0px 0px 0px 6px #b91810;
+  box-shadow: 0px 0px 0px 1px #b0170f, 0px 0px 0px 0.3rem #b91810;
   color: white;
 }
 /* ==========================================================================
@@ -528,8 +526,14 @@ body.home .current .refresh:hover {
   }
   header,
   main,
-  footer {
+  footer,
+  .deed {
     width: 100%;
+  }
+  .wrapper {
+    width: 100%;
+    padding: 0px 1.2rem;
+    max-width: 960px;
   }
   header h1 {
     font-size: 2.4rem;
@@ -541,20 +545,23 @@ body.home .current .refresh:hover {
     left: 6.55rem;
   }
   header .menu {
-    font-size: 0;
     line-height: 2.4rem;
+    font-size: 0;
   }
   header .menu:before {
-    margin-right: 0.5rem;
     font-size: 3.4rem;
-    line-height: 5rem;
+    line-height: 4.9rem;
+    margin-right: 0.5rem;
   }
   header ul {
-    right: 2.4rem;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
   }
   header ul a {
     padding: 0 1.2rem;
-    line-height: 3.6rem;
+    line-height: 4rem;
   }
   header ul a:before {
     margin: 0 0.6rem 0 0;
@@ -562,71 +569,66 @@ body.home .current .refresh:hover {
   header ul a.leave:before {
     margin: 0 0.6rem 0 0.2rem;
   }
+  footer {
+    padding: 1.2rem 0;
+  }
   footer p {
-    padding: 2.4rem 0;
     font-size: 1.2rem;
-  }
-  .container {
-    width: 100%;
-  }
-  .wrapper {
-    padding: 0px 2.4rem;
-    max-width: 960px;
     width: 100%;
   }
   .home main {
-    padding: 7.2rem 0px;
+    padding: 2.4rem 0;
   }
   .deeds.list {
-    padding: 2.4rem 0px;
+    padding: 1.2rem 0;
+  }
+  .deeds.list h4 {
+    font-size: 2.0rem;
   }
   .deed {
-    padding: 3.6rem 0;
-    width: 100%;
+    padding: 1.2rem 0;
   }
   .deed:after {
     top: 0px;
-    right: 3.5rem;
     bottom: 0px;
+    right: 2.5rem;
   }
   .deed p {
-    padding-right: 8.8rem;
-    font-size: 2.4rem;
+    font-size: 2.0rem;
+    padding-right: 6rem;
   }
   .deed .heart,
   .deed .status {
-    top: 2.6rem;
+    top: 1.1rem;
     right: 0px;
-    padding: 0.2rem;
-    width: 7.4rem;
-    height: 5.5rem;
+    height: 3.5rem;
+    width: 5.4rem;
     font-size: 1.7rem;
-    line-height: 5rem;
+    line-height: 3.5rem;
   }
   .deed .heart:before,
   .deed .status:before {
     top: 0px;
+    left: 0px;
     right: 0px;
     bottom: 0px;
-    left: 0px;
-    font-size: 5.3rem;
-    line-height: 5.5rem;
+    font-size: 3rem;
   }
   .current p {
-    padding-right: 9.4rem;
-    font-size: 6.4rem;
+    font-size: 3.2rem;
+    padding-right: 5.6rem;
   }
   .current p mark {
-    margin: 0 0.6rem;
-    padding: 0 0.5rem;
-    line-height: 7rem;
+    padding: 0 0.2rem;
+    margin: 0 0.2rem;
+    line-height: 3.8rem;
   }
   .current .refresh {
-    top: 5.2rem;
+    top: 1.5rem;
     right: 0.5rem;
-    width: 6.4rem;
-    height: 6.4rem;
-    font-size: 4.4rem;
-    line-height: 6.4rem;
+    line-height: 4rem;
+    height: 4rem;
+    width: 4rem;
+    font-size: 4rem;
   }
 }

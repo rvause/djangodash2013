@@ -15,7 +15,7 @@
     <body class="{% block body_class %}{% endblock %}">
         <header>
             <div class="wrapper">
-                <h1 class="icon flash"><a href="/">Deed&nbsp;&nbsp;Hero</a></h1>
+                <h1 class="icon flash"><a href="{% url 'suggestions:index' %}">Deed&nbsp;&nbsp;Hero</a></h1>
                 <input type="checkbox" id="icon">
                 <label for="icon" onclick class="icon menu"> Menu</label>
                 <ul>
