@@ -23,8 +23,7 @@
         {% else %}
         <section class="deed complete">
             {# URLs provided for examples #}
-            <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a> |
-            <a href="{{ object_.get_like_url }}">{{ _('Like') }}</a>
+            <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a>
             <p>{{ object_ }}</p>
             <a href="{{ object_.get_like_url }}" class="icon heart liked">{{ object_.suggestion.liked_by.count }}</a>
         </section>
