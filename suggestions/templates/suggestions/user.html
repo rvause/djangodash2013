@@ -1,23 +1,39 @@
 {% extends 'base.html' %}{% load i18n %}
-
-{% block title %}{{ _('You\'re a Hero') }} - {{ block.super }}{% endblock %}
-
+{% block body_class %}home{% endblock %}
+{% block title %}{{ block.super }} - {{ _('You\'re a Hero') }}{% endblock %}
 {% block content %}
-    {% for object_ in object_list %}
-        {% if forloop.first %}
+{% for object_ in object_list %}
+{% if forloop.first %}
+<main>
+    <div class="wrapper">
+        <section class="deed current" id="{{ object.id }}">
             <p>
-                {{ object_ }}
+                <s>{{ object_.split.0 }}</s><mark>{% if object_.them_text %}{{ object_.them_text }}{% else %}{{ _('them') }}{% endif %}</mark><s>{{ object_.split.1 }}</s>
+                <a href="{% url 'suggestions:index' %}?format=json" class="icon refresh"></a>
                 {# URLs provided for examples #}
                 <a href="{{ object_.get_actioned_url }}">{{ _('Actioned') }}</a> |
                 <a href="{% url 'suggestions:skip' %}">{{ _('Skip') }}</a>
             </p>
+        </section>
+    </div>
+</main>
+<section class="deeds list">
+    <div class="wrapper">
+        <section class="deed info">
+            <h4>Recent Deeds</h4>
+            <span class="icon status"></span>
+        </section>
         {% else %}
-            <p>
-                {{ object_ }} ({{ object_.suggestion.liked_by.count }})
-                {# URLs provided for examples #}
-                <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a> |
-                <a href="{{ object_.get_like_url }}">{{ _('Like') }}</a>
-            </p>
+        <section class="deed complete">
+            {{ object_ }}
+            {# URLs provided for examples #}
+            <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a> |
+            <a href="{{ object_.get_like_url }}">{{ _('Like') }}</a>
+            <p><s>Treat</s> them to a <s>meal</s></p>
+            <a href="#" class="icon heart liked">{{ object_.suggestion.liked_by.count }}</a>
+        </section>
         {% endif %}
-    {% endfor %}
+    </div>
+</section>
+{% endfor %}
 {% endblock %}
