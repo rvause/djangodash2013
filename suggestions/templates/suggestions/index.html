@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load i18n %}
+{% extends 'base.html' %}{% load i18n staticfiles %}
 {% block body_class %}home{% endblock %}
 {% block title %}{{ block.super }} - {{ _('Home') }}{% endblock %}
 {% block content %}
@@ -36,3 +36,5 @@
     </div>
 </section>
 {% endblock %}
+
+{% block extra_js %}<script src="{% static "js/site.js" %}"></script>{% endblock %}
