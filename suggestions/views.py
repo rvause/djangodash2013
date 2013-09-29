@@ -165,3 +165,21 @@ class PutBackView(
             # TODO: Make this and other lines like it to a model method
             {'suggestion': {'text': str(suggestion), 'id': suggestion.id}}
         )
+
+
+class UpdateTextView(
+    LoginRequiredMixin,
+    GetSuggestionCopySingleMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Update the text for "them" in the selected suggestion
+    """
+    def post(self, request, *ar, **kw):
+        obj = self.get_object(kw['id'])
+        if not 'text' in request.POST:
+            return HttpResponseBadRequest('No text supplied')
+        obj.them_text = request.POST['text']
+        obj.save()
+        return self.render_to_response({'status': 'success'})

@@ -200,3 +200,17 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertNotEqual(data['suggestion']['id'], copy.id)
+
+    def test_update_text(self):
+        self.client.login(username=self.user.username, password='test')
+        copy = SuggestionCopy.objects.create(
+            suggestion=self.suggestion,
+            user=self.user
+        )
+        url = reverse('suggestions:update_text', args=(copy.id,))
+        response = self.client.post(url, {'text': 'him'})
+        self.assertEqual(response.status_code, 200)
+        copy = SuggestionCopy.objects.get(pk=copy.id)
+        self.assertEqual(copy.them_text, 'him')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 400)

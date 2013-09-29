@@ -28,4 +28,9 @@ urlpatterns = patterns(
         views.LikeSuggestionView.as_view(),
         name='like'
     ),
+    url(
+        r'^my/(?P<id>\d+)/update-text/$',
+        views.UpdateTextView.as_view(),
+        name='update_text'
+    ),
 )
