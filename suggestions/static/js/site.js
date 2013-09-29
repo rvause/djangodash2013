@@ -11,12 +11,13 @@ app.Deed = {
 };
 
 app.request = {
-    create: function ( elem, user ) {
-        var _this     = this;
-        this.trigger  = elem;
-        trigger.on( 'click', function( e ){
+    create: function ( elem, active ) {
+        var _this   = this;
+        this.elem   = elem;
+        this.target = active;
+        elem.on( 'click', function( e ){
             e.preventDefault();
-            _this.getNextDeed( trigger.attr( 'href' ) );
+            _this.getNextDeed( elem.attr( 'href' ) );
         });
         return this;
     },
@@ -27,20 +28,33 @@ app.request = {
             url: url,
             dataType: 'json',
             timeout: 300,
-            beforeStart: function () {
-                _this.trigger.addClass( 'loading' );
+            beforeSend: function () {
+                _this.elem.addClass( 'loading' );
+                console.log( _this );
             },
             success: function( data ){
-                console.log( data );
+                _this.elem.removeClass( 'loading' );
+                _this.updateActiveDeed( data );
             },
             error: function( xhr, type ){
             }
         });
-
+    },
+    updateActiveDeed: function ( data ) {
+        var $text  = this.target.find('s');
+        var $them  = this.target.find( 'mark' );
+        var text   = data.split_text;
+        var them   = 'them';
+        this.target.addClass('finished');
+        $text.first().text( text[0] );
+        $them.text( them );
+        $text.last().text( text[1] );
+        this.target.removeClass('finished');
     }
 };
 
 var trigger = $('.refresh');
+var active  = $('.deed.suggestion');
 var request = app.request;
 
-request.create( trigger );
+request.create( trigger, active );
