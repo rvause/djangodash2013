@@ -20,3 +20,18 @@ class SuggestionAdminForm(forms.ModelForm):
         except:
             pass
         return slug
+
+
+class AddSuggestionForm(forms.ModelForm):
+    class Meta:
+        model = Suggestion
+        fields = ('text',)
+
+    def save(self, user, commit=True):
+        obj = super(AddSuggestionForm, self).save(commit=False)
+        obj.public = False
+        obj.make_unique_slug()
+        obj.submitted_by = user
+        if commit:
+            obj.save()
+        return obj
