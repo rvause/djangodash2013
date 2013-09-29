@@ -71,6 +71,12 @@ class SuggestionModelTests(TestCaseWithSuggestion):
             'How about this for them?'
         )
 
+    def test_split(self):
+        self.assertEqual(
+            self.suggestion.split(),
+            ['How about this for ', '?']
+        )
+
     def test_make_unique_slug(self):
         self.suggestion.make_unique_slug()
         self.assertEqual(self.suggestion.slug, 'how-about-this-for-them')
@@ -118,6 +124,12 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
         self.assertEqual(self.copy.get_text(), self.suggestion.get_text())
         self.copy.them_text = 'him'
         self.assertEqual(self.copy.get_text(), 'How about this for him?')
+
+    def test_split(self):
+        self.assertEqual(
+            self.copy.split(),
+            ['How about this for ', '?']
+        )
 
     def test_data(self):
         self.copy.id = 1

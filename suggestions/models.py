@@ -114,6 +114,9 @@ class Suggestion(models.Model):
     def get_text(self):
         return self.text.replace('{{them}}', 'them')
 
+    def split(self):
+        return self.text.split('{{them}}')
+
     def make_unique_slug(self):
         """
         Make a unique slug
@@ -200,6 +203,9 @@ class SuggestionCopy(models.Model):
         if self.them_text:
             return self.suggestion.text.replace('{{them}}', self.them_text)
         return self.suggestion.get_text()
+
+    def split(self):
+        return self.suggestion.text.split('{{them}}')
 
     def _get_data(self):
         return {
