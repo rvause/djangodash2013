@@ -142,6 +142,12 @@ class ViewsTests(TestCaseWithSuggestion):
     def login(self):
         self.client.login(username=self.user.username, password='test')
 
+    def get_copy(self):
+        return SuggestionCopy.objects.create(
+            suggestion=self.suggestion,
+            user=self.user
+        )
+
     def test_index(self):
         url = reverse('suggestions:index')
         response = self.client.get(url)
@@ -171,10 +177,7 @@ class ViewsTests(TestCaseWithSuggestion):
 
     def test_actioned(self):
         self.login()
-        copy = SuggestionCopy.objects.create(
-            suggestion=self.suggestion,
-            user=self.user
-        )
+        copy = self.get_copy()
         url = reverse('suggestions:actioned', args=(copy.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -182,10 +185,7 @@ class ViewsTests(TestCaseWithSuggestion):
 
     def test_like(self):
         self.login()
-        copy = SuggestionCopy.objects.create(
-            suggestion=self.suggestion,
-            user=self.user
-        )
+        copy = self.get_copy()
         url = reverse('suggestions:like', args=(copy.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -194,10 +194,7 @@ class ViewsTests(TestCaseWithSuggestion):
 
     def test_put_back(self):
         self.login()
-        copy = SuggestionCopy.objects.create(
-            suggestion=self.suggestion,
-            user=self.user
-        )
+        copy = self.get_copy()
         url = reverse('suggestions:put_back', args=(copy.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -206,10 +203,7 @@ class ViewsTests(TestCaseWithSuggestion):
 
     def test_update_text(self):
         self.login()
-        copy = SuggestionCopy.objects.create(
-            suggestion=self.suggestion,
-            user=self.user
-        )
+        copy = self.get_copy()
         url = reverse('suggestions:update_text', args=(copy.id,))
         response = self.client.post(url, {'text': 'him'})
         self.assertEqual(response.status_code, 200)
