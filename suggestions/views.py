@@ -144,3 +144,24 @@ class LikeSuggestionView(
         return self.render_to_response(
             {'likes': obj.suggestion.liked_by.count()}
         )
+
+class PutBackView(
+    LoginRequiredMixin,
+    GetSuggestionCopySingleMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Put a crossed suggestion back to current by making a copy of it
+    """
+    def get(self, request, *ar, **kw):
+        obj = self.get_object(kw['id'])
+        self.get_queryset()[0].delete()
+        suggestion = SuggestionCopy.objects.create_from_suggestion_for_user(
+            obj.suggestion,
+            request.user
+        )
+        return self.render_to_response(
+            # TODO: Make this and other lines like it to a model method
+            {'suggestion': {'text': str(suggestion), 'id': suggestion.id}}
+        )
