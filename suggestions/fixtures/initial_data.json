@@ -4,15 +4,8 @@
     "model": "suggestions.suggestion",
     "fields": {
         "submitted_by": null,
-        "liked_by": [
-            2,
-            4
-        ],
-        "actioned_by": [
-            2,
-            4,
-            1
-        ],
+        "liked_by": [],
+        "actioned_by": [],
         "text": "Get {{them}} some flowers",
         "public": true,
         "slug": "get-them-some-flowers"
@@ -24,9 +17,7 @@
     "fields": {
         "submitted_by": null,
         "liked_by": [],
-        "actioned_by": [
-            1
-        ],
+        "actioned_by": [],
         "text": "Leave {{them}} a note to say you love {{them}}",
         "public": true,
         "slug": "leave-them-a-not-to-say-you-love-them"
@@ -38,9 +29,7 @@
     "fields": {
         "submitted_by": null,
         "liked_by": [],
-        "actioned_by": [
-            1
-        ],
+        "actioned_by": [],
         "text": "Treat {{them}} to a meal",
         "public": true,
         "slug": "treat-them-meal"
@@ -52,9 +41,7 @@
     "fields": {
         "submitted_by": null,
         "liked_by": [],
-        "actioned_by": [
-            1
-        ],
+        "actioned_by": [],
         "text": "Make {{them}} breakfast in bed",
         "public": true,
         "slug": "make-them-breakfast-bed"
@@ -66,9 +53,7 @@
     "fields": {
         "submitted_by": null,
         "liked_by": [],
-        "actioned_by": [
-            1
-        ],
+        "actioned_by": [],
         "text": "Help {{them}} with the laundry",
         "public": true,
         "slug": "help-them-laundry"
