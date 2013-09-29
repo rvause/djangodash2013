@@ -1,4 +1,4 @@
-# Django settings for bekind project.
+# Django settings for deedhero project.
 import os
 
 import dj_database_url
@@ -23,7 +23,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost/bekind')
+    'default': dj_database_url.config(default='postgres://localhost/deedhero')
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -108,10 +108,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'bekind.urls'
+ROOT_URLCONF = 'deedhero.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'bekind.wsgi.application'
+WSGI_APPLICATION = 'deedhero.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or

@@ -2,6 +2,6 @@ language: python
 python:
   - "2.7"
 before_script:
-  - psql -c 'CREATE DATABASE bekind;' -U postgres
+  - psql -c 'CREATE DATABASE deedhero;' -U postgres
 install: pip install -r requirements.txt --use-mirrors
-script: python manage.py test suggestions --settings=bekind.test_settings
+script: python manage.py test suggestions --settings=deedhero.test_settings

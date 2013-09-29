@@ -1,1 +1,1 @@
-web: gunicorn bekind.wsgi
+web: gunicorn deedhero.wsgi
