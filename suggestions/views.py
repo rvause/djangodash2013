@@ -97,9 +97,7 @@ class SkipSuggestionView(
     def get(self, request, *ar, **kw):
         self.get_queryset()[0].delete()
         queryset = self.get_queryset()
-        return self.render_to_response(
-            {'suggestion': {'text': str(queryset[0]), 'id': queryset[0].id}}
-        )
+        return self.render_to_response({'suggestion': queryset[0].data})
 
 
 class GetSuggestionCopySingleMixin(object):
@@ -130,9 +128,7 @@ class ActionSuggestionView(
         suggestion = SuggestionCopy.objects.create_random_for_user(
             request.user
         )
-        return self.render_to_response(
-            {'suggestion': {'text': str(suggestion), 'id': suggestion.id}}
-        )
+        return self.render_to_response({'suggestion': suggestion.data})
 
 
 class LikeSuggestionView(
@@ -167,10 +163,7 @@ class PutBackView(
             obj.suggestion,
             request.user
         )
-        return self.render_to_response(
-            # TODO: Make this and other lines like it to a model method
-            {'suggestion': {'text': str(suggestion), 'id': suggestion.id}}
-        )
+        return self.render_to_response({'suggestion': suggestion.data})
 
 
 class UpdateTextView(
