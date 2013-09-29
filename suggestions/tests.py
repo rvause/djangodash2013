@@ -11,7 +11,7 @@ from django.http import HttpResponse
 
 from .models import Suggestion, SuggestionCopy
 from .views import LoginRequiredMixin, JSONResponseMixin
-from .forms import SuggestionAdminForm
+from .forms import SuggestionAdminForm, AddSuggestionForm
 
 
 User = get_user_model()
@@ -248,7 +248,7 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertEqual(response.status_code, 400)
 
 
-class FormTests(TestCase):
+class FormTests(TestCaseWithSuggestion):
     def test_suggestion_admin_form(self):
         suggestion_1 = Suggestion.objects.create(
             text='How about this for {{them}}?',
@@ -266,3 +266,11 @@ class FormTests(TestCase):
         data['slug'] = 'something-different'
         form = SuggestionAdminForm(data)
         self.assertTrue(form.is_valid())
+
+    def test_add_suggestion_form(self):
+        form = AddSuggestionForm({'text': 'A suggestion'})
+        self.assertTrue(form.is_valid())
+        obj = form.save(self.user)
+        self.assertEqual(self.user.id, obj.submitted_by.id)
+        self.assertFalse(obj.public)
+        self.assertTrue(obj.slug)
