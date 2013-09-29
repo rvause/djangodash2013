@@ -92,6 +92,14 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
     def test_defaults(self):
         self.assertEqual(timezone.now().date(), self.copy.created_on.date())
 
+    def test_permalinks(self):
+        self.copy.id = 1
+        self.assertTrue(self.copy.get_suggestion_url())
+        self.assertTrue(self.copy.get_actioned_url())
+        self.assertTrue(self.copy.get_put_back_url())
+        self.assertTrue(self.copy.get_like_url())
+        self.assertTrue(self.copy.get_update_text_url())
+
     def test_create_random_for_user_manager(self):
         copy = SuggestionCopy.objects.create_random_for_user(self.user)
         self.assertTrue(isinstance(copy, SuggestionCopy))

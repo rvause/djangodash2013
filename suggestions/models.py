@@ -167,6 +167,25 @@ class SuggestionCopy(models.Model):
     def __str__(self):
         return self.get_text()
 
+    def get_suggestion_url(self):
+        return self.suggestion.get_absolute_url()
+
+    @models.permalink
+    def get_actioned_url(self):
+        return ('suggestions:actioned', (), {'id': self.id})
+
+    @models.permalink
+    def get_put_back_url(self):
+        return ('suggestions:put_back', (), {'id': self.id})
+
+    @models.permalink
+    def get_like_url(self):
+        return ('suggestions:like', (), {'id': self.id})
+
+    @models.permalink
+    def get_update_text_url(self):
+        return ('suggestions:update_text', (), {'id': self.id})
+
     def get_text(self):
         if self.them_text:
             return self.suggestion.text.replace('{{them}}', self.them_text)
