@@ -118,6 +118,18 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
         self.copy.them_text = 'him'
         self.assertEqual(self.copy.get_text(), 'How about this for him?')
 
+    def test_data(self):
+        self.copy.id = 1
+        self.assertTrue(self.copy.data['id'])
+        self.assertTrue(self.copy.data['text'])
+        self.assertEqual(self.copy.data['likes'], 0)
+        self.assertEqual(self.copy.data['actions'], 0)
+        self.assertTrue(self.copy.data['urls']['suggestion'])
+        self.assertTrue(self.copy.data['urls']['actioned'])
+        self.assertTrue(self.copy.data['urls']['put_back'])
+        self.assertTrue(self.copy.data['urls']['like'])
+        self.assertTrue(self.copy.data['urls']['update_text'])
+
 
 class ViewMixinTests(TestCase):
     def setUp(self):

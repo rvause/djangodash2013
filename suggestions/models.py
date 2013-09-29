@@ -190,3 +190,24 @@ class SuggestionCopy(models.Model):
         if self.them_text:
             return self.suggestion.text.replace('{{them}}', self.them_text)
         return self.suggestion.get_text()
+
+    def _get_data(self):
+        return {
+            'id': self.id,
+            'text': self.get_text(),
+            'likes': self.suggestion.liked_by.count(),
+            'actions': self.suggestion.actioned_by.count(),
+            'urls': {
+                'suggestion': self.get_suggestion_url(),
+                'actioned': self.get_actioned_url(),
+                'put_back': self.get_put_back_url(),
+                'like': self.get_like_url(),
+                'update_text': self.get_update_text_url()
+            }
+        }
+
+    @property
+    def data(self):
+        if not hasattr(self, '_data'):
+            self._data = self._get_data()
+        return self._data
