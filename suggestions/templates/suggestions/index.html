@@ -15,7 +15,10 @@
         <a href="{% url 'logout' %}">{{ _('Logout') }}</a>
     {% endif %}
 </p>
-<p>{{ _('Suggestion') }}: {{ object }}</p>
+<p data-id="{{ object.id }}">
+    {{ _('Suggestion') }}: {{ object }}
+    <a href="{{ object.get_absolute_url }}">#</a>
+</p>
 {# Add ?format=json to the following url will return JSON #}
 <a href="{% url 'suggestions:index' %}">{{ _('Refresh') }}</a>
 {% endblock %}
