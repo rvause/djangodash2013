@@ -96,28 +96,7 @@ class SkipSuggestionView(
         )
 
 
-class ActionSuggestionView(
-    LoginRequiredMixin,
-    GetSuggestionCopyQSMixin,
-    JSONResponseMixin,
-    View
-):
-    """
-    Mark the current suggestion for the user as actioned and return a new
-    suggestion
-    """
-    def get(self, request, *ar, **kw):
-        self.get_queryset()[0].suggestion.actioned_by.add(request.user)
-        queryset = self.get_queryset()
-        return self.render_to_response(
-            {'suggestion': {'text': str(queryset[0]), 'id': queryset[0].id}}
-        )
-
-
-class LikeSuggestionView(LoginRequiredMixin, JSONResponseMixin, View):
-    """
-    Mark a suggestion as liked by the user and return the amount of likes
-    """
+class GetSuggestionCopySingleMixin(object):
     def get_queryset(self):
         queryset = self.request.user.suggestions.all()
         if not queryset.count():
@@ -128,6 +107,37 @@ class LikeSuggestionView(LoginRequiredMixin, JSONResponseMixin, View):
     def get_object(self, id):
         return get_object_or_404(self.get_queryset(), pk=id)
 
+
+class ActionSuggestionView(
+    LoginRequiredMixin,
+    GetSuggestionCopySingleMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Mark the current suggestion for the user as actioned and return a new
+    suggestion
+    """
+    def get(self, request, *ar, **kw):
+        obj = self.get_object(kw['id'])
+        obj.suggestion.actioned_by.add(request.user)
+        suggestion = SuggestionCopy.objects.create_random_for_user(
+            request.user
+        )
+        return self.render_to_response(
+            {'suggestion': {'text': str(suggestion), 'id': suggestion.id}}
+        )
+
+
+class LikeSuggestionView(
+    LoginRequiredMixin,
+    GetSuggestionCopySingleMixin,
+    JSONResponseMixin,
+    View
+):
+    """
+    Mark a suggestion as liked by the user and return the amount of likes
+    """
     def get(self, request, *ar, **kw):
         obj = self.get_object(kw['id'])
         obj.suggestion.liked_by.add(request.user)
