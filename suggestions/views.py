@@ -153,6 +153,7 @@ class LikeSuggestionView(
             {'likes': obj.suggestion.liked_by.count()}
         )
 
+
 class PutBackView(
     LoginRequiredMixin,
     GetSuggestionCopySingleMixin,
