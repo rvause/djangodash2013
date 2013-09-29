@@ -1,33 +1,37 @@
 {% extends 'base.html' %}{% load i18n %}
-
-{% block title %}{{ _('Home') }} - {{ block.super }}{% endblock %}
-
+{% block title %}{{ block.super }} - {{ _('Home') }}{% endblock %}
 {% block content %}
-<p>
-    {% if not user.is_authenticated %}
-        <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a> /
-        <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-    {% else %}
-        {% blocktrans with user.get_full_name as name %}
-            Logged in as {{ name }}
-        {% endblocktrans %}
-        <a href="{% url 'suggestions:users' %}">{{ _('My Deeds') }}</a> /
-        <a href="{% url 'logout' %}">{{ _('Logout') }}</a>
-    {% endif %}
-</p>
-<p data-id="{{ object.id }}">
-    {{ _('Suggestion') }}: {{ object }}
-    <a href="{{ object.get_absolute_url }}">#</a>
-</p>
-{# Add ?format=json to the following url will return JSON #}
-<a href="{% url 'suggestions:index' %}">{{ _('Refresh') }}</a>
-
-{% if recent_suggestions %}
-    <ul>
+<main class="deeds active">
+    <div class="wrapper">
+        <section class="deed suggestion" id="{{ object.id }}">
+            <p>
+                <s>{{ object }}</s>
+            </p>
+            {# Add ?format=json to the following url will return JSON #}
+            <a href="{% url 'suggestions:index' %}" class="button refresh"></a>
+        </section>
+    </div>
+</main>
+<section class="deeds list">
+    <div class="wrapper">
+        <section class="deed info">
+            <h4>Recent Deeds</h4>
+            <span class="button status"></span>
+        </section>
+        {% if recent_suggestions %}
         {% for object_ in recent_suggestions %}
-            <li>{{ object_ }}</li>
+        {# object_ #}
+        <section class="deed complete">
+            <p><s>Treat</s> them to a <s>meal</s></p>
+            <a href="#" class="button heart liked">2</a>
+        </section>
         {% endfor %}
-    </ul>
-{% endif %}
-
+        {% else %}
+        <section class="deed empty">
+            <p>There are no deeds</p>
+            <a href="#" class="button empty">0</a>
+        </section>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

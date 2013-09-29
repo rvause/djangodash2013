@@ -1,9 +1,39 @@
+{% load staticfiles i18n %}
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <title>{% block title %}Zero to Hero{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Deed Hero{% endblock %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static "css/site.css" %}">
+        <link rel="stylesheet" href="{% static "css/fonts.css" %}">
     </head>
     <body>
+        <header>
+            <div class="wrapper">
+                <h1>Deed Hero</h1>
+                <ul>
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'social:begin' 'twitter' %}">{{ _('Login with Twitter') }}</a></li>
+                    <li><a href="{% url 'social:begin' 'facebook' %}">{{ _('Login with Facebook') }}</a></li>
+                {% else %}
+                {% blocktrans with user.get_full_name as name %}
+                    <li>{{ name }}</li>
+                {% endblocktrans %}
+                    <li><a href="{% url 'suggestions:users' %}">{{ _('My Deeds') }}</a></li>
+                    <li><a href="{% url 'logout' %}">{{ _('Logout') }}</a></li>
+                {% endif %}
+            </div>
+        </header>
         {% block content %}{% endblock %}
+        <footer>
+            <div class="wrapper">
+
+            </div>
+        </footer>
     </body>
 </html>
