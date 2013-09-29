@@ -15,13 +15,23 @@ class SuggestionQuerySet(QuerySet):
         return self.filter(public=True)
 
     def get_random_for_user(self, user):
+        # First see if we can get a suggestion the user never used before
         try:
             return self.exclude(actioned_by__in=[user]).order_by('?')[0]
         except IndexError:
+            # Then we try and get a suggestion they did not get recently
             try:
-                return self.order_by('?')[0]
+                return self.exclude(
+                    pk__in=[
+                        s.suggestion.id for s in user.suggestions.all()[:10]
+                    ]
+                )[0]
             except IndexError:
-                raise ImproperlyConfigured('No suggestions are installed')
+                # Then we just try and get anything
+                try:
+                    return self.order_by('?')[0]
+                except IndexError:
+                    raise ImproperlyConfigured('No suggestions are installed')
 
 
 class SuggestionManager(models.Manager):

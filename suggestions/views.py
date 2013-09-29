@@ -96,6 +96,7 @@ class SkipSuggestionView(
     """
     def get(self, request, *ar, **kw):
         self.get_queryset()[0].delete()
+        SuggestionCopy.objects.create_random_for_user(self.request.user)
         queryset = self.get_queryset()
         return self.render_to_response({'suggestion': queryset[0].data})
 
