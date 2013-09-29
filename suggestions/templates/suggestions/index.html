@@ -16,4 +16,6 @@
     {% endif %}
 </p>
 <p>{{ _('Suggestion') }}: {{ object }}</p>
+{# AJAX call to the following url will return JSON #}
+<a href="{% url 'suggestions:index' %}">{{ _('Refresh') }}</a>
 {% endblock %}
