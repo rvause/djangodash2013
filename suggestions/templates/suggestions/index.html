@@ -21,10 +21,9 @@
         </section>
         {% if recent_suggestions %}
         {% for object_ in recent_suggestions %}
-        {# object_ #}
         <section class="deed complete">
-            <p><s>Treat</s> them to a <s>meal</s></p>
-            <a href="#" class="icon heart liked">2</a>
+        <p>{{ object_ }}</p>
+        <a href="#" class="icon heart liked">{{ object_.suggestion.liked_by.count }}</a>
         </section>
         {% endfor %}
         {% else %}
