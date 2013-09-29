@@ -21,4 +21,13 @@
 </p>
 {# Add ?format=json to the following url will return JSON #}
 <a href="{% url 'suggestions:index' %}">{{ _('Refresh') }}</a>
+
+{% if recent_suggestions %}
+    <ul>
+        {% for object_ in recent_suggestions %}
+            <li>{{ object_ }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 {% endblock %}

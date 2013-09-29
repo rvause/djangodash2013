@@ -17,6 +17,11 @@ class IndexView(DetailView):
     model = Suggestion
     template_name = 'suggestions/index.html'
 
+    def get_context_data(self, **kw):
+        ctx = super(IndexView, self).get_context_data(**kw)
+        ctx['recent_suggestions'] = SuggestionCopy.objects.all()[:5]
+        return ctx
+
     def get_object(self, queryset=None):
         if queryset is None:
             queryset = self.get_queryset()
