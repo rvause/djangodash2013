@@ -12,9 +12,15 @@ class SuggestionQuerySet(QuerySet):
     Provide custom queryset methods for Suggestions
     """
     def public(self):
+        """
+        Get suggestions only that are marked as public
+        """
         return self.filter(public=True)
 
     def get_random_for_user(self, user):
+        """
+        Get a random suggestion for user based on what they have actioned
+        """
         # First see if we can get a suggestion the user never used before
         try:
             return self.exclude(actioned_by__in=[user]).order_by('?')[0]
@@ -112,9 +118,15 @@ class Suggestion(models.Model):
         return ('suggestions:suggestion', (), {'slug': self.slug})
 
     def get_text(self):
+        """
+        Get the text with {{them}} replaced with the default 'them'
+        """
         return self.text.replace('{{them}}', 'them')
 
     def split(self):
+        """
+        Split the text by {{them}} and return a list
+        """
         return self.text.split('{{them}}')
 
     def make_unique_slug(self):
@@ -200,11 +212,18 @@ class SuggestionCopy(models.Model):
         return ('suggestions:update_text', (), {'id': self.id})
 
     def get_text(self):
+        """
+        Get the text replacing {{them}} with property them_text
+        """
         if self.them_text:
             return self.suggestion.text.replace('{{them}}', self.them_text)
         return self.suggestion.get_text()
 
     def split(self):
+        """
+        Split the suggestion text by {{them}}
+        TODO: Probably just use the Suggestion method
+        """
         return self.suggestion.text.split('{{them}}')
 
     def _get_data(self):
@@ -225,6 +244,9 @@ class SuggestionCopy(models.Model):
 
     @property
     def data(self):
+        """
+        Get the data to be serialised as JSON for the object
+        """
         if not hasattr(self, '_data'):
             self._data = self._get_data()
         return self._data

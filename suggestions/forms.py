@@ -5,6 +5,9 @@ from .models import Suggestion
 
 
 class SuggestionAdminForm(forms.ModelForm):
+    """
+    Form for use in the admin site
+    """
     class Meta:
         model = Suggestion
         fields = ('text', 'slug', 'public')
@@ -23,6 +26,9 @@ class SuggestionAdminForm(forms.ModelForm):
 
 
 class AddSuggestionForm(forms.ModelForm):
+    """
+    Form for adding a suggestion by any user
+    """
     class Meta:
         model = Suggestion
         fields = ('text',)
