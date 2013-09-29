@@ -2,15 +2,22 @@ var app = app || {};
 
 
 app.Deed = {
-    create: function ( elem, target ) {
-
+    create: function ( elem, target, parent ) {
+        var _this   = this;
+        this.elem   = elem;
+        this.target = active;
+        this.parent = parent;
+        elem.on( 'click', function ( e ) {
+            e.preventDefault();
+        });
+        return this;
     },
     replaceCurrent: function () {
 
     }
 };
 
-app.request = {
+app.anonRequest = {
     create: function ( elem, active ) {
         var _this   = this;
         this.elem   = elem;
@@ -34,27 +41,24 @@ app.request = {
             },
             success: function( data ){
                 _this.elem.removeClass( 'loading' );
-                _this.updateActiveDeed( data );
+                _this.updateCurrentDeed( data );
             },
             error: function( xhr, type ){
             }
         });
     },
-    updateActiveDeed: function ( data ) {
-        var $text  = this.target.find('s');
-        var $them  = this.target.find( 'mark' );
-        var text   = data.split_text;
-        var them   = 'them';
-        this.target.addClass('finished');
-        $text.first().text( text[0] );
-        $them.text( them );
-        $text.last().text( text[1] );
-        this.target.removeClass('finished');
+    updateCurrentDeed: function ( data ) {
+        var $text  = this.target.find( 's' ),
+            $them  = this.target.find( 'mark' );
+        this.target.addClass( 'complete' );
+        $text.first().text( $.trim( data.split_text[ 0 ] ) );
+        $text.last().text(  $.trim( data.split_text[ 1 ]  ) );
+        this.target.removeClass( 'complete' );
     }
 };
 
-var trigger = $('.refresh');
-var active  = $('.deed.suggestion');
-var request = app.request;
+app.userRequest = {
+};
 
-request.create( trigger, active );
+var anonRequest = app.anonRequest;
+anonRequest.create( $('.refresh'), $('.deed.current') );

@@ -237,9 +237,9 @@ footer {
     float: left;
     width: 100%;
 }
-/* Active
+/* Home
    ========================================================================== */
-.deeds.active {
+.deeds.home {
     .gradient( @sugg-bg, spin( @sugg-bg, -25% ), @sugg-bg );
     border-bottom: 1px solid darken( spin( @sugg-bg, -25% ), 2% );
 }
@@ -355,9 +355,9 @@ footer {
         }
     }
 }
-/* Suggestion
+/* Current
    ========================================================================== */
-.deed.suggestion {
+.deed.current {
     background: none;
     border: 0px;
     &:after {
@@ -427,7 +427,7 @@ footer {
         padding: 0px @space;
         max-width: 960px;
     }
-    .deeds.active {
+    .deeds.home {
         padding: @space * 3 0px;
     }
     .deeds.list {
@@ -464,7 +464,7 @@ footer {
             }
         }
     }
-    .deed.suggestion {
+    .deed.current {
         p {
             font-size: @type-1;
             padding-right: @type-1 * 2;

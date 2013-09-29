@@ -1,9 +1,9 @@
 {% extends 'base.html' %}{% load i18n %}
 {% block title %}{{ block.super }} - {{ _('Home') }}{% endblock %}
 {% block content %}
-<main class="deeds active">
+<main class="deeds home">
     <div class="wrapper">
-        <section class="deed suggestion" id="{{ object.id }}">
+        <section class="deed current" id="{{ object.id }}">
             <p>
                 <s>{{ object.split.0 }}</s><mark>{% if object.them_text %}{{ object.them_text }}{% else %}{{ _('them') }}{% endif %}</mark><s>{{ object.split.1 }}</s>
             </p>

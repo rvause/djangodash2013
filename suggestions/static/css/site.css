@@ -267,10 +267,10 @@ footer p + p {
   float: left;
   width: 100%;
 }
-/* Active
+/* Home
    ========================================================================== */
 
-.deeds.active {
+.deeds.home {
   background: #7937b3;
   background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4537b3), color-stop(1, #7937b3));
   background: -ms-linear-gradient(bottom, #4537b3, #7937b3);
@@ -385,25 +385,25 @@ footer p + p {
 .deed.complete:hover .liked span {
   color: white;
 }
-/* Suggestion
+/* Current
    ========================================================================== */
 
-.deed.suggestion {
+.deed.current {
   background: none;
   border: 0px;
 }
-.deed.suggestion:after {
+.deed.current:after {
   border: 0px;
 }
-.deed.suggestion p {
+.deed.current p {
   color: white;
   text-shadow: 0px 1px 1px #512578;
 }
-.deed.suggestion p mark {
+.deed.current p mark {
   border: 0.4rem dashed #441f65;
   background: none;
 }
-.deed.suggestion .refresh {
+.deed.current .refresh {
   position: absolute;
   box-shadow: 0px 1px 0px 0px #3f1d5d, 0px 0px 0px 6px #441f65;
   z-index: 2;
@@ -415,7 +415,7 @@ footer p + p {
   border: 1px solid #7c38b7;
   text-shadow: 0px 1px 1px #512578;
 }
-.deed.suggestion .refresh:hover {
+.deed.current .refresh:hover {
   background: #863fc4;
   border: 1px solid #7e39bb;
   box-shadow: 0px 0px 0px 1px #441f65, 0px 0px 0px 6px #4a216d;
@@ -462,7 +462,7 @@ footer p + p {
     padding: 0px 2.4rem;
     max-width: 960px;
   }
-  .deeds.active {
+  .deeds.home {
     padding: 7.2rem 0px;
   }
   .deeds.list {
@@ -500,16 +500,16 @@ footer p + p {
     font-size: 5.3rem;
     line-height: 5.5rem;
   }
-  .deed.suggestion p {
+  .deed.current p {
     font-size: 6.4rem;
     padding-right: 12.8rem;
   }
-  .deed.suggestion p mark {
+  .deed.current p mark {
     padding: 0 0.5rem;
     margin: 0 0.6rem;
     line-height: 7rem;
   }
-  .deed.suggestion .refresh {
+  .deed.current .refresh {
     top: 5.2rem;
     right: 0.5rem;
     line-height: 6.4rem;
