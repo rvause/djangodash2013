@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% load i18n %}
+
+{% block title %}{{ _('Add a suggestion') }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% for message in messages %}
+        <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{{ _('Add a suggestion') }}">
+    </form>
+{% endblock %}

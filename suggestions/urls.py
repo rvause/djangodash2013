@@ -7,6 +7,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^my/$', views.UserView.as_view(), name='users'),
+    url(r'^my/add/$', views.AddSuggestionView.as_view(), name='add'),
     url(r'^my/skip/$', views.SkipSuggestionView.as_view(), name='skip'),
     url(
         r'^(?P<slug>[\w-]+)/$',

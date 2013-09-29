@@ -204,6 +204,14 @@ class ViewsTests(TestCaseWithSuggestion):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['object_list'].count())
 
+    def test_add(self):
+        self.login()
+        url = reverse('suggestions:add')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(url, {'text': 'test'})
+        self.assertEqual(response.status_code, 302)
+
     def test_skip(self):
         self.login()
         url = reverse('suggestions:skip')
