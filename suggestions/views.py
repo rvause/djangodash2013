@@ -47,7 +47,8 @@ class IndexView(DetailView):
                         {
                             'id': ctx['object'].id,
                             'suggestion': str(ctx['object']),
-                            'url': ctx['object'].get_absolute_url()
+                            'url': ctx['object'].get_absolute_url(),
+                            'split_text': ctx['object'].split()
                         }
                     ),
                     content_type='application/json'

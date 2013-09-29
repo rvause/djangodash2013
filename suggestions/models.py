@@ -211,6 +211,7 @@ class SuggestionCopy(models.Model):
         return {
             'id': self.id,
             'text': self.get_text(),
+            'split_text': self.split(),
             'likes': self.suggestion.liked_by.count(),
             'actions': self.suggestion.actioned_by.count(),
             'urls': {
