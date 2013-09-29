@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
 from suggestions.models import Suggestion
@@ -93,7 +93,7 @@ def actioned_receiver(sender, instance, action, **kw):
             user = instance.actioned_by.get(pk=id)
             qs = Achievement.objects.filter(
                 check=Achievement.ACTIONED,
-                count__gte=user.suggestions_actioned.count(),
+                count__lte=user.suggestions_actioned.count(),
             )
             if qs.exists():
                 for achievement in qs:
@@ -101,3 +101,35 @@ def actioned_receiver(sender, instance, action, **kw):
                         user=user,
                         achievement=achievement
                     )
+
+
+@receiver(m2m_changed, sender=Suggestion.liked_by.through)
+def liked_receiver(sender, instance, action, **kw):
+    if action == 'post_add':
+        for id in kw['pk_set']:
+            user = instance.liked_by.get(pk=id)
+            qs = Achievement.objects.filter(
+                check=Achievement.LIKED,
+                count__lte=user.suggestions_liked.count()
+            )
+            if qs.exists():
+                for achievement in qs:
+                    UserAchievement.objects.create(
+                        user=user,
+                        achievement=achievement
+                    )
+
+
+@receiver(post_save, sender=Suggestion)
+def submitted_receiver(sender, instance, **kw):
+    if not instance.public and instance.submitted_by:
+        qs = Achievement.objects.filter(
+            check=Achievement.SUBMITTED,
+            count__lte=instance.submitted_by.suggestions_submitted.count()
+        )
+        if qs.exists():
+            for achievement in qs:
+                UserAchievement.objects.create(
+                    user=instance.submitted_by,
+                    achievement=achievement
+                )

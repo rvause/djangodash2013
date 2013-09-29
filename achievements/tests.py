@@ -38,14 +38,28 @@ class UserAchievementModelTests(BaseTestCase):
             user=self.user,
             achievement=self.achievement
         )
+        self.suggestion = Suggestion.objects.create(
+            text='Test Suggestion',
+            slug='test-suggestion'
+        )
 
     def test_defaults(self):
         self.assertEqual(self.ua.achieved_on.date(), timezone.now().date())
 
     def test_actioned_receiver(self):
-        suggestion = Suggestion.objects.create(
-            text='Test Suggestion',
-            slug='test-suggestion'
-        )
-        suggestion.actioned_by.add(self.user)
+        self.suggestion.actioned_by.add(self.user)
+        self.assertIn(self.achievement, self.user.achievement_set.all())
+
+    def test_liked_receiver(self):
+        self.achievement.check = Achievement.LIKED
+        self.achievement.save()
+        self.suggestion.liked_by.add(self.user)
+        self.assertIn(self.achievement, self.user.achievement_set.all())
+
+    def test_submitted_receiver(self):
+        self.achievement.check = Achievement.SUBMITTED
+        self.achievement.save()
+        self.suggestion.submitted_by = self.user
+        self.suggestion.public = False
+        self.suggestion.save()
         self.assertIn(self.achievement, self.user.achievement_set.all())
