@@ -15,7 +15,7 @@
     <body class="{% block body_class %}{% endblock %}">
         <header>
             <div class="wrapper">
-                <h1>Deed Hero</h1>
+                <h1>Deed&nbsp;&nbsp;Hero</h1>
                 <ul>
                 {% if not user.is_authenticated %}
                     <li><a href="{% url 'social:begin' 'twitter' %}">{{ _('Login with Twitter') }}</a></li>

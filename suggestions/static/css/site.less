@@ -134,10 +134,6 @@ p {
     font-size: @type-5;
 }
 a {
-    border: 3px dashed darken( @deed-bg, 10% );
-    padding: 0px 5px;
-    border-radius: 5px;
-    text-decoration: none;
 }
 
 /* ==========================================================================
@@ -160,9 +156,16 @@ header, main, footer {
    ========================================================================== */
 header {
     h1 {
+        position: relative;
+        z-index: 1;
         display: inline-block;
         text-transform: uppercase;
         color: @header-color;
+        &:before {
+            position: absolute;
+            z-index: -1;
+            color: @yellow;
+        }
     }
     ul {
         float: right;
@@ -441,6 +444,11 @@ body.home {
         padding: @space / 2 0;
         h1 {
             font-size: @type-4;
+            &:before {
+                top: 0px;
+                bottom: 0px;
+                left: 6.55rem;
+            }
         }
     }
     footer {
