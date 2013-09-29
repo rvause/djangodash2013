@@ -1,9 +1,48 @@
+{% load staticfiles i18n %}
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <title>{% block title %}Zero to Hero{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Deed Hero{% endblock %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static "css/site.css" %}">
+        <link rel="stylesheet" href="{% static "css/fonts.css" %}">
     </head>
-    <body>
+    <body class="{% block body_class %}{% endblock %}">
+        <header>
+            <div class="wrapper">
+                <h1 class="icon flash">Deed&nbsp;&nbsp;Hero</h1>
+                <input type="checkbox" id="icon">
+                <label for="icon" onclick class="icon menu"> Menu</label>
+                <ul>
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'social:begin' 'twitter' %}" class="icon twitter">{{ _('Login with Twitter') }}</a></li>
+                    <li><a href="{% url 'social:begin' 'facebook' %}" class="icon facebook">{{ _('Login with Facebook') }}</a></li>
+                {% else %}
+                {% blocktrans with user.get_full_name as name %}
+                    <li class="icon user">{{ name }}</li>
+                {% endblocktrans %}
+                    <li><a href="{% url 'suggestions:users' %}" class="icon status">{{ _('My Deeds') }}</a></li>
+                    <li><a href="{% url 'logout' %}" class="icon exit">{{ _('Logout') }}</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </header>
         {% block content %}{% endblock %}
+        <footer>
+            <div class="wrapper">
+
+            </div>
+        </footer>
+        <script>
+            document.write('<script src=' +
+            ('__proto__' in {} ? '\/\/cdnjs.cloudflare.com\/ajax\/libs\/zepto\/1.0rc1\/zepto.min' : '\/\/cdnjs.cloudflare.com\/ajax\/libs\/jquery\/1.9.1\/jquery.min') +
+            '.js><\/script>')
+        </script>
+        <script src="{% static "js/site.js" %}"></script>
     </body>
 </html>
