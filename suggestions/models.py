@@ -25,7 +25,7 @@ class SuggestionQuerySet(QuerySet):
                     pk__in=[
                         s.suggestion.id for s in user.suggestions.all()[:10]
                     ]
-                )[0]
+                ).order_by('?')[0]
             except IndexError:
                 # Then we just try and get anything
                 try:
