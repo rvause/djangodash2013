@@ -9,7 +9,7 @@
                 <s>{{ object.split.0 }}</s><mark>{% if object.them_text %}{{ object.them_text }}{% else %}{{ _('them') }}{% endif %}</mark><s>{{ object.split.1 }}</s>
             </p>
             {# Add ?format=json to the following url will return JSON #}
-            <a href="{% url 'suggestions:index' %}?format=json" class="button refresh"></a>
+            <a href="{% url 'suggestions:index' %}?format=json" class="icon refresh"></a>
         </section>
     </div>
 </main>
@@ -17,20 +17,20 @@
     <div class="wrapper">
         <section class="deed info">
             <h4>Recent Deeds</h4>
-            <span class="button status"></span>
+            <span class="icon status"></span>
         </section>
         {% if recent_suggestions %}
         {% for object_ in recent_suggestions %}
         {# object_ #}
         <section class="deed complete">
             <p><s>Treat</s> them to a <s>meal</s></p>
-            <a href="#" class="button heart liked">2</a>
+            <a href="#" class="icon heart liked">2</a>
         </section>
         {% endfor %}
         {% else %}
         <section class="deed empty">
             <p>There are no deeds</p>
-            <a href="#" class="button empty">0</a>
+            <a href="#" class="icon empty">0</a>
         </section>
         {% endif %}
     </div>

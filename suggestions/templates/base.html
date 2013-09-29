@@ -15,18 +15,21 @@
     <body class="{% block body_class %}{% endblock %}">
         <header>
             <div class="wrapper">
-                <h1>Deed&nbsp;&nbsp;Hero</h1>
+                <h1 class="icon flash">Deed&nbsp;&nbsp;Hero</h1>
+                <input type="checkbox" id="icon">
+                <label for="icon" onclick class="icon menu"> Menu</label>
                 <ul>
                 {% if not user.is_authenticated %}
-                    <li><a href="{% url 'social:begin' 'twitter' %}">{{ _('Login with Twitter') }}</a></li>
-                    <li><a href="{% url 'social:begin' 'facebook' %}">{{ _('Login with Facebook') }}</a></li>
+                    <li><a href="{% url 'social:begin' 'twitter' %}" class="icon twitter">{{ _('Login with Twitter') }}</a></li>
+                    <li><a href="{% url 'social:begin' 'facebook' %}" class="icon facebook">{{ _('Login with Facebook') }}</a></li>
                 {% else %}
                 {% blocktrans with user.get_full_name as name %}
-                    <li>{{ name }}</li>
+                    <li class="icon user">{{ name }}</li>
                 {% endblocktrans %}
-                    <li><a href="{% url 'suggestions:users' %}">{{ _('My Deeds') }}</a></li>
-                    <li><a href="{% url 'logout' %}">{{ _('Logout') }}</a></li>
+                    <li><a href="{% url 'suggestions:users' %}" class="icon status">{{ _('My Deeds') }}</a></li>
+                    <li><a href="{% url 'logout' %}" class="icon exit">{{ _('Logout') }}</a></li>
                 {% endif %}
+                </ul>
             </div>
         </header>
         {% block content %}{% endblock %}
