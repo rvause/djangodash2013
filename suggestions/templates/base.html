@@ -43,6 +43,6 @@
             ('__proto__' in {} ? '\/\/cdnjs.cloudflare.com\/ajax\/libs\/zepto\/1.0rc1\/zepto.min' : '\/\/cdnjs.cloudflare.com\/ajax\/libs\/jquery\/1.9.1\/jquery.min') +
             '.js><\/script>')
         </script>
-        <script src="{% static "js/site.js" %}"></script>
+        {% block extra_js %}{% endblock %}
     </body>
 </html>

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load i18n %}
+{% extends 'base.html' %}{% load i18n staticfiles %}
 {% block body_class %}home{% endblock %}
 {% block title %}{{ block.super }} - {{ _('You\'re a Hero') }}{% endblock %}
 {% block content %}
@@ -6,14 +6,11 @@
 {% if forloop.first %}
 <main>
     <div class="wrapper">
-        <section class="deed current" id="{{ object.id }}">
+        <section class="deed current" id="{{ object_.id }}" data-actioned-url="{{ object_.get_actioned_url }}" data-like-url="{{ object_.get_like_url }}" data-likes="{{ object.suggestion.liked_by.count }}">
             <p>
                 <s>{{ object_.split.0 }}</s><mark>{% if object_.them_text %}{{ object_.them_text }}{% else %}{{ _('them') }}{% endif %}</mark><s>{{ object_.split.1 }}</s>
-                <a href="{% url 'suggestions:index' %}?format=json" class="icon refresh"></a>
-                {# URLs provided for examples #}
-                <a href="{{ object_.get_actioned_url }}">{{ _('Actioned') }}</a> |
-                <a href="{% url 'suggestions:skip' %}">{{ _('Skip') }}</a>
             </p>
+            <a href="{% url 'suggestions:skip' %}" class="icon refresh"></a>
         </section>
     </div>
 </main>
@@ -25,15 +22,18 @@
         </section>
         {% else %}
         <section class="deed complete">
-            {{ object_ }}
             {# URLs provided for examples #}
             <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a> |
             <a href="{{ object_.get_like_url }}">{{ _('Like') }}</a>
-            <p><s>Treat</s> them to a <s>meal</s></p>
-            <a href="#" class="icon heart liked">{{ object_.suggestion.liked_by.count }}</a>
+            <p>{{ object_ }}</p>
+            <a href="{{ object_.get_like_url }}" class="icon heart liked">{{ object_.suggestion.liked_by.count }}</a>
         </section>
         {% endif %}
-    </div>
-</section>
+{% if forloop.last %}
+        </div>
+    </section>
+{% endif %}
 {% endfor %}
 {% endblock %}
+
+{% block extra_js %}<script src="{% static "js/users.js" %}"></script>{% endblock %}
