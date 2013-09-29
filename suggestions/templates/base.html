@@ -15,7 +15,7 @@
     <body class="{% block body_class %}{% endblock %}">
         <header>
             <div class="wrapper">
-                <h1 class="icon flash">Deed&nbsp;&nbsp;Hero</h1>
+                <h1 class="icon flash"><a href="{% url 'suggestions:index' %}">Deed&nbsp;&nbsp;Hero</a></h1>
                 <input type="checkbox" id="icon">
                 <label for="icon" onclick class="icon menu"> Menu</label>
                 <ul>
@@ -27,7 +27,7 @@
                     <li class="icon user">{{ name }}</li>
                 {% endblocktrans %}
                     <li><a href="{% url 'suggestions:users' %}" class="icon status">{{ _('My Deeds') }}</a></li>
-                    <li><a href="{% url 'logout' %}" class="icon exit">{{ _('Logout') }}</a></li>
+                    <li><a href="{% url 'logout' %}" class="icon leave">{{ _('Logout') }}</a></li>
                 {% endif %}
                 </ul>
             </div>
@@ -35,7 +35,8 @@
         {% block content %}{% endblock %}
         <footer>
             <div class="wrapper">
-
+                <p>Made for <a href="http://djangodash.com/">djangodash.com</a> by <a href="http://twitter.com/rvause">@rvause</a> and <a href="http://twitter.com/mikedidthis">@mikedidthis</a></p>
+                <p><a href="#">Privacy Policy</a></p>
             </div>
         </footer>
         <script>
