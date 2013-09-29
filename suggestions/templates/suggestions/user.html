@@ -5,9 +5,19 @@
 {% block content %}
     {% for object_ in object_list %}
         {% if forloop.first %}
-            <p>{{ object_ }}</p>
+            <p>
+                {{ object_ }}
+                {# URLs provided for examples #}
+                <a href="{{ object_.get_actioned_url }}">{{ _('Actioned') }}</a> |
+                <a href="{% url 'suggestions:skip' %}">{{ _('Skip') }}</a>
+            </p>
         {% else %}
-            <p>{{ object_ }}</p>
+            <p>
+                {{ object_ }} ({{ object_.suggestion.liked_by.count }})
+                {# URLs provided for examples #}
+                <a href="{{ object_.get_put_back_url }}">{{ _('Put Back') }}</a> |
+                <a href="{{ object_.get_like_url }}">{{ _('Like') }}</a>
+            </p>
         {% endif %}
     {% endfor %}
 {% endblock %}
