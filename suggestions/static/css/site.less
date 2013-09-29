@@ -22,7 +22,7 @@
 
 @deed-bg:      @white;
 @deed-color:   @black;
-@sugg-bg:      @purple;
+@sugg-bg:      @red;
 @sugg-color:   @white;
 
 @heart-bg:     @pink;
@@ -159,10 +159,10 @@ header, main, footer {
    Header
    ========================================================================== */
 header {
-    background: @black;
     h1 {
         display: inline-block;
         text-transform: uppercase;
+        color: @header-color;
     }
     ul {
         float: right;
@@ -205,7 +205,7 @@ footer {
     text-align: center;
     text-decoration: none;
 }
-.button:before {
+.button:before, header h1:before {
     font-family: "fontello";
     font-style: normal;
     font-weight: normal;
@@ -215,6 +215,11 @@ footer {
     text-align: center;
     font-variant: normal;
     text-transform: none;
+}
+/* Logo
+   ========================================================================== */
+header h1:before {
+    content: '\e805';
 }
 /* Refresh
    ========================================================================== */
@@ -375,9 +380,14 @@ footer {
 /* Home
    ========================================================================== */
 body.home {
-    .gradient( @sugg-bg, spin( @sugg-bg, -25% ), @sugg-bg );
-    border-bottom: 1px solid darken( spin( @sugg-bg, -25% ), 2% );
-    .deed.current {
+    header {
+        background: darken( @sugg-bg, 5% );
+    }
+    main {
+        .gradient( @sugg-bg, spin( @sugg-bg, -25% ), @sugg-bg );
+        border-bottom: 1px solid darken( spin( @sugg-bg, -25% ), 2% );
+    }
+    .current {
         background: none;
         border: 0px;
         &:after {
@@ -428,6 +438,10 @@ body.home {
         width: 100%;
     }
     header {
+        padding: @space / 2 0;
+        h1 {
+            font-size: @type-4;
+        }
     }
     footer {
         p {
@@ -480,7 +494,7 @@ body.home {
             }
         }
     }
-    .deed.current {
+    .current {
         p {
             font-size: @type-1;
             padding-right: @type-1 * 2;
