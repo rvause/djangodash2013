@@ -1,13 +1,21 @@
 import json
 
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseRedirect
+)
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Suggestion, SuggestionCopy
+from .forms import AddSuggestionForm
 
 
 class IndexView(DetailView):
@@ -189,3 +197,20 @@ class UpdateTextView(
         obj.them_text = request.POST['text']
         obj.save()
         return self.render_to_response({'status': 'success'})
+
+
+class AddSuggestionView(LoginRequiredMixin, CreateView):
+    """
+    Allow a logged in user to add their own suggestion for review that can
+    be added (by an admin) to the pool of suggestions given on the site
+    """
+    template_name = 'suggestions/add.html'
+    form_class = AddSuggestionForm
+
+    def get_success_url(self):
+        return reverse('suggestions:add')
+
+    def form_valid(self, form):
+        form.save(self.request.user)
+        messages.success(self.request, _('Thank you for your suggestion'))
+        return HttpResponseRedirect(self.get_success_url())
