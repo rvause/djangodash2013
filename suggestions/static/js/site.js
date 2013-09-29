@@ -21,11 +21,15 @@ app.request = {
         return this;
     },
     getNextDeed: function ( url ) {
+        var _this = this;
         $.ajax({
             type: 'GET',
             url: url,
             dataType: 'json',
             timeout: 300,
+            beforeStart: function () {
+                _this.trigger.addClass( 'loading' );
+            },
             success: function( data ){
                 console.log( data );
             },
