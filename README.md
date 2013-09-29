@@ -3,6 +3,11 @@ Deed Hero
 
 [![Build Status](https://travis-ci.org/rvause/djangodash2013.png?branch=master)](https://travis-ci.org/rvause/djangodash2013)
 
+http://www.deedhero.com
+
+A simple application that provides suggestions of kind gestures for your loved
+ones, be it a friend, relative, SO, or pet.
+
 ## Project Setup
 
 1. Create a new virtualenv: `virtualenv env` and `source env/bin/activate`.
