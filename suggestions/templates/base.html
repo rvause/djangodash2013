@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{% static "css/site.css" %}">
         <link rel="stylesheet" href="{% static "css/fonts.css" %}">
     </head>
-    <body>
+    <body class="{% block body_class %}{% endblock %}">
         <header>
             <div class="wrapper">
                 <h1>Deed Hero</h1>

@@ -174,6 +174,7 @@ a {
    ========================================================================== */
 
 header,
+main,
 footer {
   float: left;
 }
@@ -190,6 +191,19 @@ footer {
    Header
    ========================================================================== */
 
+header {
+  background: #333333;
+}
+header h1 {
+  display: inline-block;
+  text-transform: uppercase;
+}
+header ul {
+  float: right;
+}
+header ul li {
+  display: inline-block;
+}
 /* ==========================================================================
    Footer
    ========================================================================== */
@@ -266,18 +280,6 @@ footer p + p {
 .deeds {
   float: left;
   width: 100%;
-}
-/* Home
-   ========================================================================== */
-
-.deeds.home {
-  background: #7937b3;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4537b3), color-stop(1, #7937b3));
-  background: -ms-linear-gradient(bottom, #4537b3, #7937b3);
-  background: -moz-linear-gradient(center bottom, #4537b3 0%, #7937b3 100%);
-  background: -o-linear-gradient(#7937b3, #4537b3);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7937b3', endColorstr='#4537b3', GradientType=0);
-  border-bottom: 1px solid #4235ab;
 }
 /* List
    ========================================================================== */
@@ -388,22 +390,44 @@ footer p + p {
 /* Current
    ========================================================================== */
 
-.deed.current {
+/* Info
+   ========================================================================== */
+
+.deed.info {
+  cursor: default;
+}
+/* ==========================================================================
+   Views
+   ========================================================================== */
+
+/* Home
+   ========================================================================== */
+
+body.home {
+  background: #7937b3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4537b3), color-stop(1, #7937b3));
+  background: -ms-linear-gradient(bottom, #4537b3, #7937b3);
+  background: -moz-linear-gradient(center bottom, #4537b3 0%, #7937b3 100%);
+  background: -o-linear-gradient(#7937b3, #4537b3);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7937b3', endColorstr='#4537b3', GradientType=0);
+  border-bottom: 1px solid #4235ab;
+}
+body.home .deed.current {
   background: none;
   border: 0px;
 }
-.deed.current:after {
+body.home .deed.current:after {
   border: 0px;
 }
-.deed.current p {
+body.home .deed.current p {
   color: white;
   text-shadow: 0px 1px 1px #512578;
 }
-.deed.current p mark {
+body.home .deed.current p mark {
   border: 0.4rem dashed #441f65;
   background: none;
 }
-.deed.current .refresh {
+body.home .deed.current .refresh {
   position: absolute;
   box-shadow: 0px 1px 0px 0px #3f1d5d, 0px 0px 0px 6px #441f65;
   z-index: 2;
@@ -415,17 +439,11 @@ footer p + p {
   border: 1px solid #7c38b7;
   text-shadow: 0px 1px 1px #512578;
 }
-.deed.current .refresh:hover {
+body.home .deed.current .refresh:hover {
   background: #863fc4;
   border: 1px solid #7e39bb;
   box-shadow: 0px 0px 0px 1px #441f65, 0px 0px 0px 6px #4a216d;
   color: white;
-}
-/* Info
-   ========================================================================== */
-
-.deed.info {
-  cursor: default;
 }
 /* ==========================================================================
    Media Queries - 0px
@@ -445,10 +463,9 @@ footer p + p {
     font-size: 10px;
   }
   header,
+  main,
   footer {
     width: 100%;
-    padding: 20px;
-    display: none;
   }
   footer p {
     font-size: 1.6rem;
@@ -462,7 +479,7 @@ footer p + p {
     padding: 0px 2.4rem;
     max-width: 960px;
   }
-  .deeds.home {
+  .home main {
     padding: 7.2rem 0px;
   }
   .deeds.list {
