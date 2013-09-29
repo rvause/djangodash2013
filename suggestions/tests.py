@@ -135,6 +135,7 @@ class SuggestionCopyModelTests(TestCaseWithSuggestion):
         self.copy.id = 1
         self.assertTrue(self.copy.data['id'])
         self.assertTrue(self.copy.data['text'])
+        self.assertEqual(self.copy.split(), self.copy.data['split_text'])
         self.assertEqual(self.copy.data['likes'], 0)
         self.assertEqual(self.copy.data['actions'], 0)
         self.assertTrue(self.copy.data['urls']['suggestion'])
