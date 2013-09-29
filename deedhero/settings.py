@@ -135,6 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 INSTALLED_APPS = (
     # Project apps
     'suggestions',
+    'achievements',
 
     # 3rd Party
     'south',
