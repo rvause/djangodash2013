@@ -456,20 +456,20 @@ footer p a:hover {
    ========================================================================== */
 
 body.home header {
-  border-bottom: 1px solid #eb2116;
-  background: #ec2a1f;
+  border-bottom: 1px solid #672f98;
+  background: #6c319f;
 }
 body.home header ul {
-  background: #df1d13;
+  background: #5f2b8c;
 }
 body.home main {
-  background: #ee4037;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ee377a), color-stop(1, #ee4037));
-  background: -ms-linear-gradient(bottom, #ee377a, #ee4037);
-  background: -moz-linear-gradient(center bottom, #ee377a 0%, #ee4037 100%);
-  background: -o-linear-gradient(#ee4037, #ee377a);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee4037', endColorstr='#ee377a', GradientType=0);
-  border-bottom: 1px solid #ed2e74;
+  background: #7937b3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4537b3), color-stop(1, #7937b3));
+  background: -ms-linear-gradient(bottom, #4537b3, #7937b3);
+  background: -moz-linear-gradient(center bottom, #4537b3 0%, #7937b3 100%);
+  background: -o-linear-gradient(#7937b3, #4537b3);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7937b3', endColorstr='#4537b3', GradientType=0);
+  border-bottom: 1px solid #4235ab;
 }
 body.home .current {
   border: 0px;
@@ -480,10 +480,10 @@ body.home .current:after {
 }
 body.home .current p {
   color: white;
-  text-shadow: 0px 1px 1px #c81a11;
+  text-shadow: 0px 1px 1px #512578;
 }
 body.home .current p mark {
-  border: 0.3rem dashed #b0170f;
+  border: 0.3rem dashed #441f65;
   background: none;
 }
 body.home .current .refresh {
@@ -493,18 +493,18 @@ body.home .current .refresh {
   margin: 0;
   padding: 0;
   border: 0;
-  border: 1px solid #ee443c;
+  border: 1px solid #7c38b7;
   border-radius: 3px;
-  background: #ee4037;
-  box-shadow: 0px 1px 0px 0px #a7160e, 0px 0px 0px 0.3rem #b0170f;
+  background: #7937b3;
+  box-shadow: 0px 1px 0px 0px #3f1d5d, 0px 0px 0px 0.3rem #441f65;
   color: #f2f2f2;
   text-align: center;
-  text-shadow: 0px 1px 1px #c81a11;
+  text-shadow: 0px 1px 1px #512578;
 }
 body.home .current .refresh:hover {
-  border: 1px solid #ef4940;
-  background: #f0564f;
-  box-shadow: 0px 0px 0px 1px #b0170f, 0px 0px 0px 0.3rem #b91810;
+  border: 1px solid #7e39bb;
+  background: #863fc4;
+  box-shadow: 0px 0px 0px 1px #441f65, 0px 0px 0px 0.3rem #4a216d;
   color: white;
 }
 /* ==========================================================================
@@ -644,6 +644,13 @@ body.home .current .refresh:hover {
   }
   .deed {
     padding: 2.4rem 0;
+  }
+  .current .refresh {
+    top: 2.65rem;
+  }
+  .deed .heart,
+  .deed .status {
+    top: 2.25rem;
   }
 }
 @media screen and (min-width: 960px) {
